@@ -14,7 +14,6 @@ from requests import get
 
 # pip install azure-cognitiveservices-search-imagesearch
 # pip install requests
-# comment
 
 urllib.request.urlretrieve
 
