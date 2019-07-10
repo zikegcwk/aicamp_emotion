@@ -13,11 +13,11 @@ while True:
     cv2.imshow("test", frame)
     if not ret:
         break
-        k = cv2.waitKey(1)
-        if k%256 == 27:
+    k = cv2.waitKey(1)
+    if k%256 == 27:
         # ESC pressed
-            print("Escape hit, closing...")
-            break
+        print("Escape hit, closing...")
+        break
     elif k%256==104:
         for x in range(0, 10):#added
             img_name = "opencv_frame_HAPPY{}.png".format(img_counter)#added
