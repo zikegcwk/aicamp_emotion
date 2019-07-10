@@ -25,9 +25,10 @@ def main():
             print("Escape hit, closing...")
             break
         if k%256==104:
-            for x in range(0, 250):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
+                cv.waitKey(1)
                 img_name = "opencv_frame_HAPPY{}.png".format(img_counter)#added
                 cv2.imwrite(os.path.join(here, 'images', 'happyface', img_name), frame)#added
                 print("{} SAVED!".format(img_name))
@@ -35,9 +36,10 @@ def main():
                 time.sleep(.2)
         
         if k%256==115:
-            for x in range(0, 250):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
+                cv.waitKey(1)
                 img_name = "opencv_frame_SAD{}.png".format(img_counter)#added
                 cv2.imwrite(os.path.join(here, 'images', 'sadface', img_name), frame)#added
                 print("{} SAVED!".format(img_name))
@@ -45,9 +47,10 @@ def main():
                 time.sleep(.3)
            
         if k%256==112:
-            for x in range(0, 250):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
+                cv.waitKey(1)
                 img_name = "opencv_frame_POKER{}.png".format(img_counter)#added
                 cv2.imwrite(os.path.join(here, 'images', 'pokerface', img_name), frame)#added
                 print("{} SAVED!".format(img_name))
@@ -55,9 +58,10 @@ def main():
                 time.sleep(.3)
             
         if k%256 == 109:
-            for x in range(0, 250):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
+                cv.waitKey(1)
                 img_name = "opencv_frame_MADFACE{}.png".format(img_counter)#added
                 cv2.imwrite(os.path.join(here, 'images', 'madface', img_name), frame)#added
                 print("{} SAVED!".format(img_name))
@@ -66,9 +70,10 @@ def main():
              
              
         if k%256 == 32:
-            for x in range(0, 250):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
+                cv.waitKey(1)
                 img_name = "opencv_frame_StandardPicture{}.png".format(img_counter)#added
                 cv2.imwrite(os.path.join(here, 'images', 'standard', img_name), frame)#added
                 print("{} SAVED!".format(img_name))
