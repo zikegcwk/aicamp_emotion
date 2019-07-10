@@ -12,6 +12,9 @@ from azure.cognitiveservices.search.imagesearch import ImageSearchAPI
 from msrest.authentication import CognitiveServicesCredentials
 from requests import get
 
+# pip install azure-cognitiveservices-search-imagesearch
+# pip install requests
+
 urllib.request.urlretrieve
 
 search_term = input("What would you like to search?")
