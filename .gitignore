@@ -110,3 +110,4 @@ venv.bak/
 /AIEIOCamera/*
 /.idea/*
 /images/*
+/labelimg/*
