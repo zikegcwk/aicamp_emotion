@@ -5,10 +5,10 @@ import cv2
 
 
 def main():
-    """This program is to take multiple images for AIEIO when an assigned key is pressed
+    '''This program is to take multiple images for AIEIO when an assigned key is pressed
     --- You may adjust the amount of pictures you want for each press by changing the
     assigned range :)
-    """
+    '''
     cam = cv2.VideoCapture(0)
 
     cv2.namedWindow("test")
@@ -28,55 +28,55 @@ def main():
             print("Escape hit, closing...")
             break
         if k % 256 == 104:
-            for x in range(0, 100):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
-                img_name = "HAPPY{}.png".format(img_counter)  # added
+                img_name = "opencv_frame_HAPPY{}.png".format(img_counter)  # added
                 cv2.imwrite(os.path.join(here, 'images', 'happyface', img_name), frame)  # added
                 print("{} SAVED!".format(img_name))
                 img_counter += 1
                 time.sleep(.2)
 
         if k % 256 == 115:
-            for x in range(0, 100):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
-                img_name = "SAD{}.png".format(img_counter)  # added
+                img_name = "opencv_frame_SAD{}.png".format(img_counter)  # added
                 cv2.imwrite(os.path.join(here, 'images', 'sadface', img_name), frame)  # added
                 print("{} SAVED!".format(img_name))
                 img_counter += 1
                 time.sleep(.3)
 
         if k % 256 == 112:
-            for x in range(0, 100):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
-                img_name = "POKER{}.png".format(img_counter)  # added
+                img_name = "opencv_frame_POKER{}.png".format(img_counter)  # added
                 cv2.imwrite(os.path.join(here, 'images', 'pokerface', img_name), frame)  # added
                 print("{} SAVED!".format(img_name))
                 img_counter += 1
                 time.sleep(.3)
 
         if k % 256 == 109:
-            for x in range(0, 100):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
-                img_name = "MADFACE{}.png".format(img_counter)  # added
+                img_name = "opencv_frame_MADFACE{}.png".format(img_counter)  # added
                 cv2.imwrite(os.path.join(here, 'images', 'madface', img_name), frame)  # added
                 print("{} SAVED!".format(img_name))
                 img_counter += 1
                 time.sleep(.3)
 
         if k % 256 == 32:
-            for x in range(0, 100):
+            for x in range(0, 188):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
-                img_name = "StandardPicture{}.png".format(img_counter)  # added
+                img_name = "opencv_frame_StandardPicture{}.png".format(img_counter)  # added
                 cv2.imwrite(os.path.join(here, 'images', 'standard', img_name), frame)  # added
                 print("{} SAVED!".format(img_name))
                 img_counter += 1
