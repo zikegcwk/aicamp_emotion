@@ -36,7 +36,11 @@ def main():
             print("Successfully created the directory {}".format(path))
 
     try:  # sets image counter to avoid overwriting old images from max of target directory
-        img_counter = int(max(os.listdir(path)).split(".png")[0].split("_")[1]) + 1
+        max_file = max(os.listdir(path))
+        # example, happy0004.png -> happy0004
+        file_text = max_file.split(".png")[0]
+        number_part = file_text.split('_')[1]
+        img_counter = int(number_part) + 1
         print("Starting image counter at {}".format(img_counter))
     except ValueError:
         img_counter = 0
