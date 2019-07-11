@@ -25,7 +25,7 @@ def main():
         else:
             print("Successfully created the directory %s " % path)
 
-    try:
+    try:  # sets image counter to avoid overwriting old images
         img_counter = int(max(os.listdir(path)).split(".png")[0].split("_")[1]) + 1
         print("Starting image counter at %s" % img_counter)
     except ValueError:
@@ -43,18 +43,17 @@ def main():
         if not ret:
             break
         k = cv2.waitKey(1)
-        if k % 256 == 27:
-            # ESC pressed
+        if k % 256 == 27:  # esc pressed
             print("Escape hit, closing...")
             break
-        if k % 256 == 32:
+        if k % 256 == 32:  # space pressed
             for x in range(0, 50):
                 ret, frame = cam.read()
                 cv2.imshow("test", frame)
                 cv2.waitKey(1)
                 img_name = "{}_{}.png".format(emotion, str(img_counter).zfill(4))
                 cv2.imwrite(os.path.join(here, 'images', emotion, img_name), frame)
-                print("{} SAVED!".format(img_name))
+                print("{} Saved".format(img_name))
                 img_counter += 1
                 time.sleep(.2)
     cam.release()
