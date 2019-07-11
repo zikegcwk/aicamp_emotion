@@ -13,29 +13,31 @@ def main():
 
     try:  # set emotion
         emotion = sys.argv[1]
+        print("Emotion set to {}".format(emotion))
     except IndexError:
         emotion = "happy"
-        print("No emotion specified, set to default \"happy\".")
+        print("Emotion set to default \"happy\".")
     try:  # set number of pics to take each time
         numpics = sys.argv[2]
+        print("Number of images set to {}".format(numpics))
     except IndexError:
         numpics = 150
-        print("Number of images not specified, set to default 150.")
+        print("Number of images set to default 150.")
 
     path = os.path.join(os.getcwd(), 'images', emotion)
     if os.path.isdir(path):
-        print("Directory was not created since %s already exists." % path)
+        print("Directory was not created since {} already exists.".format(path))
     else:
         try:
             os.mkdir(path)
         except OSError:
-            print("Creation of the directory %s failed" % path)
+            print("Creation of the directory {} failed".format(path))
         else:
-            print("Successfully created the directory %s " % path)
+            print("Successfully created the directory {}".format(path))
 
     try:  # sets image counter to avoid overwriting old images from max of target directory
         img_counter = int(max(os.listdir(path)).split(".png")[0].split("_")[1]) + 1
-        print("Starting image counter at %s." % img_counter)
+        print("Starting image counter at {}".format(img_counter))
     except ValueError:
         img_counter = 0
         print("No files detected, starting counter at 0")
