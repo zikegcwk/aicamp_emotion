@@ -110,3 +110,5 @@ venv.bak/
 /AIEIOCamera/*
 /.idea/*
 /images/*
+/labelimg/*
+michael.png
