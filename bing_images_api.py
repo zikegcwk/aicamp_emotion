@@ -20,6 +20,7 @@ def download(url, file_name):
         # write to file
         file.write(response.content)
 
+#testing pycharm code
 #function to call Bing Images API to give URLs of images and to save them to a outfile
 #search_term=word being searched, image_count=# of images, term=type of image (happy, sad, etc)
 def saveurl(search_term, image_count, term):
