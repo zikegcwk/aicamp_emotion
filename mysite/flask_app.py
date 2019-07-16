@@ -7,7 +7,10 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 upload_folder = '/home/AriChikkere/mysite/images'
+
+#Depends on web server's settings
 app.secret_key = "secret key"
+
 app.config['upload_folder'] = upload_folder
 accepted_extensions = set(['jpg', 'jpeg', 'png', 'gif'])
 
