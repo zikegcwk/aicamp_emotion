@@ -1,14 +1,9 @@
-
-# A very simple Flask Hello World app for you to get started with...
 import os
 from flask import Flask, flash, request, redirect, render_template
 import urllib.request
+from flask_app import app
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
-upload_folder = '/home/AriChikkere/mysite/images'
-app.secret_key = "secret key"
-app.config['upload_folder'] = upload_folder
 accepted_extensions = set(['jpg', 'jpeg', 'png', 'gif'])
 
 def allowed_file(filename):
@@ -29,7 +24,7 @@ def upload_file():
 		for file in files:
 			if file and allowed_file(file.filename):
 				filename = secure_filename(file.filename)
-				file.save(os.path.join(app.config['upload_folder'], filename))
+				file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 		flash('File(s) successfully uploaded')
 		return redirect('/')
 
