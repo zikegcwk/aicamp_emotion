@@ -13,7 +13,7 @@ def main():
 
     try:  # set emotion
         emotion = sys.argv[1]
-        print("Emotion set to {}".format(emotion))
+        print('Emotion set to {}'.format(emotion))
     except IndexError:
         emotion = "happy"
         print("Emotion set to default \"happy\".")
