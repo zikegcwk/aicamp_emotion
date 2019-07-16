@@ -1,17 +1,19 @@
 # import the necessary packages
-import numpy as np
 import time
-import cv2
-import os
 
-def yolo_forward(net, LABELS, image, confidence_level, threshold, save_image=False):
-    ''' forward data through yolo network
-    '''
+import cv2
+import numpy as np
+
+
+def yolo_forward(net, labels, image, confidence_level, threshold, save_image=False):
+    """
+    forward data through YOLO network
+    """
 
     # initialize a list of colors to represent each possible class label
     np.random.seed(42)
-    COLORS = np.random.randint(0, 255, size=(10000, 3),
-        dtype="uint8")
+    colors = np.random.randint(0, 255, size=(10000, 3),
+                               dtype="uint8")
 
     # grab image spatial dimensions
     (H, W) = image.shape[:2]
@@ -25,10 +27,10 @@ def yolo_forward(net, LABELS, image, confidence_level, threshold, save_image=Fal
     # associated probabilities
     # also time it
     blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416),
-        swapRB=True, crop=False)
+                                 swapRB=True, crop=False)
     net.setInput(blob)
     start = time.time()
-    layerOutputs = net.forward(ln)
+    layer_outputs = net.forward(ln)
     end = time.time()
 
     # show timing information on YOLO
@@ -38,10 +40,10 @@ def yolo_forward(net, LABELS, image, confidence_level, threshold, save_image=Fal
     # class IDs, respectively
     boxes = []
     confidences = []
-    classIDs = []
+    class_ids = []
 
     # loop over each of the layer outputs
-    for output in layerOutputs:
+    for output in layer_outputs:
         # loop over each of the detections
         for detection in output:
             # extract the class ID and confidence (i.e., probability) of
@@ -69,48 +71,49 @@ def yolo_forward(net, LABELS, image, confidence_level, threshold, save_image=Fal
                 # and class IDs
                 boxes.append([x, y, int(width), int(height)])
                 confidences.append(float(confidence))
-                classIDs.append(classID)
+                class_ids.append(classID)
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
     # idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_level, threshold)
 
-    labels = [LABELS[i] for i in classIDs]
+    labels = [labels[i] for i in class_ids]
 
     if save_image:
-        save_img(image, classIDs, boxes, labels, confidences, COLORS, 'predictions.jpg')
+        save_img(image, class_ids, boxes, labels, confidences, colors, 'predictions.jpg')
+
+    return class_ids, labels, boxes, confidences
 
 
-    return (classIDs, labels, boxes, confidences)
-            
-def yolo_save_img(image, class_ids, boxes, labels, confidences, COLORS, file_path):
-    ''' save a image with bounding boxes
-    '''
+def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_path):
+    """
+    save a image with bounding boxes
+    """
     for i, box in enumerate(boxes):
         # extract the bounding box coordinates
         (x, y) = (box[0], box[1])
         (w, h) = (box[2], box[3])
-            
+
         # draw a bounding box rectangle and label on the image
-        color = [int(c) for c in COLORS[class_ids[i]]]
+        color = [int(c) for c in colors[class_ids[i]]]
         cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
         text = "{}: {:.4f}".format(labels[i], confidences[i])
         print(text)
         cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-    
+
     cv2.imwrite(file_path, image)
     return image
 
 
 def get_yolo_net(cfg_path, weight_path, confidence_level=0.5, threshold=0.3):
-    '''
-    return yolo net.
-    run this funtion when app starts to load the net. 
-    '''
+    """
+    return YOLO net.
+    run this function when app starts to load the net.
+    """
 
     if not cfg_path or not weight_path:
         raise Exception('missing inputs. See file.')
-    
+
     # load our YOLO object detector trained on COCO dataset (80 classes)
     print("[INFO] loading YOLO from disk...")
     net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
