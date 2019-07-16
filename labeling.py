@@ -62,9 +62,9 @@ def label_faces():
                     center_y = (y + h / 2) / img_h
                     rel_w = w / img_w
                     rel_h = h / img_h
+                    label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
                 except ZeroDivisionError:
                     continue  # writes to the text file in YOlO format
-                label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
             if len(faces) > 1:
                 index.write('{}\n'.format(img_file))
                 log.write('More than 1 face detected in {}'.format(img_file))
