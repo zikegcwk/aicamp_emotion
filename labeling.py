@@ -55,6 +55,7 @@ def label_faces():
             faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
             label = open(os.path.join(emotion_folder, img_file.split('.')[0] + '.txt'), 'w')
+
             for (x, y, w, h) in faces:  # TODO add eye checking to make recognition more accurate
                 img_h, img_w = img.shape[:2]
                 try:
@@ -62,15 +63,18 @@ def label_faces():
                     center_y = (y + h / 2) / img_h
                     rel_w = w / img_w
                     rel_h = h / img_h
-                    label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
                 except ZeroDivisionError:
                     continue  # writes to the text file in YOlO format
+                label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
+
             if len(faces) > 1:
                 index.write('{}\n'.format(img_file))
                 log.write('More than 1 face detected in {}'.format(img_file))
-            elif len(faces) == 0:
+
+            if len(faces) == 0:
                 index.write('{}\n'.format(img_file))
                 log.write('No faces detected in {}'.format(img_file))
+
             label.close()
     cv2.destroyAllWindows()
     index.close()
