@@ -6,6 +6,8 @@ import urllib.request
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+#Depends on web server's file save location
 upload_folder = '/home/AriChikkere/mysite/images'
 
 #Depends on web server's settings
