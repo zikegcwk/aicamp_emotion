@@ -32,27 +32,39 @@ def label_faces():
     index = open(os.path.join(emotion_folder, 'index.txt'), 'w+')
     log = open(os.path.join(emotion_folder, 'log.txt'), 'w+')
 
+    try:  # sets class-id for labeling bounding boxes, default 0
+        class_id = sys.argv[3]
+    except IndexError:
+        class_id = 0
+
+    try:  # the cascade file includes weights for open-cv to detect faces
+        cascade_file = os.path.join(img_folder, 'haarcascade_frontalface_default.xml')
+    except OSError:
+        print('No cascade file detected, please download and place in directory before running')
+        sys.exit(1)
+
     # cycles through each file in the directory
     for img_file in os.listdir(emotion_folder):
         if img_file.endswith(('.png', '.jpg')):
-            try:  # the cascade file includes weights for open-cv to detect faces
-                cascade_file = os.path.join(img_folder, 'haarcascade_frontalface_default.xml')
-            except OSError:
-                print('No cascade file detected, please download and place in directory before running')
-                sys.exit(1)
             face_cascade = cv2.CascadeClassifier(cascade_file)  # face detection idk how it works
-            img = cv2.imread(os.path.join(emotion_folder, img_file))
+            try:
+                img = cv2.imread(os.path.join(emotion_folder, img_file))
+            except OSError:
+                continue
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
             label = open(os.path.join(emotion_folder, img_file.split('.')[0] + '.txt'), 'w')
-            for (x, y, w, h) in faces:
+            for (x, y, w, h) in faces:  # TODO add eye checking to make recognition more accurate
                 img_h, img_w = img.shape[:2]
-                center_x = (x + w / 2) / img_w
-                center_y = (y + h / 2) / img_h
-                rel_w = w / img_w
-                rel_h = h / img_h  # writes to the text file in YOlO format
-                label.write('0 {} {} {} {}'.format(center_x, center_y, rel_w, rel_h))
+                try:
+                    center_x = (x + w / 2) / img_w
+                    center_y = (y + h / 2) / img_h
+                    rel_w = w / img_w
+                    rel_h = h / img_h
+                except ZeroDivisionError:
+                    continue  # writes to the text file in YOlO format
+                label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
             if len(faces) > 1:
                 index.write('{}\n'.format(img_file))
                 log.write('More than 1 face detected in {}'.format(img_file))
