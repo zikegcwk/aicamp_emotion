@@ -5,15 +5,18 @@ import pickle
 import time
 import ipdb
 
-#function to download based on URL and file location
-#url=url file_name=file location path
 def download(url, file_name):
+    '''
+    function to download based on URL and file location
+    url=url file_name=file location path
+    '''
     # open in binary mode- write file
     with open(file_name, "wb") as file:
         # get request ask for the data from URL
         response = get(url)
         # write to file
         file.write(response.content)
+
 #function to call Bing Images API to give URLs of images and to save them to a outfile
 #search_term=word being searched, image_count=# of images, term=type of image (happy, sad, etc)
 def saveurl(search_term, image_count, term):
@@ -90,6 +93,9 @@ def checklist(term):
         downloadurls = pickle.load(fp)
     total = len(downloadurls)
     print(total)
+
+
+# write a function that takes a list of search terms and just save the images. 
 
 #EXAMPLES OF FUNCTIONS
 #saveurl("deadpan person", 520, "poker")
