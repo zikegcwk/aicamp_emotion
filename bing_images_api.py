@@ -85,7 +85,6 @@ def downloadlist(term, file_name, search_location):
     # do the try and search
     with open('output_file_{}'.format(term), 'rb') as fp:
         download_urls = pickle.load(fp)
-    n = 1
     download_urls = set(download_urls)
     total = len(download_urls)
     try:
@@ -93,12 +92,10 @@ def downloadlist(term, file_name, search_location):
             try:
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
-                n = n + 1
             except:
                 print(
                     "Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
-                n = n + 1
-                time.sleep(480)
+                time.sleep(5)
                 continue
     except:
         print(
