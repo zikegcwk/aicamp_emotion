@@ -6,16 +6,17 @@ from requests import get
 
 
 def download(url, file_name):
-    """
+    '''
     function to download based on URL and file location
     url=url file_name=file location path
-    """
+    '''
     # open in binary mode- write file
-    with open(file_name, 'wb') as file:
+    with open(file_name, "wb") as file:
         # get request ask for the data from URL
         response = get(url)
         # write to file
         file.write(response.content)
+
 
 def save_url(search_terms, image_count, term):
     '''
@@ -84,7 +85,6 @@ def downloadlist(term, file_name, search_location):
     # do the try and search
     with open('output_file_{}'.format(term), 'rb') as fp:
         download_urls = pickle.load(fp)
-    n = 1
     download_urls = set(download_urls)
     total = len(download_urls)
     try:
@@ -92,12 +92,10 @@ def downloadlist(term, file_name, search_location):
             try:
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
-                n = n + 1
             except:
                 print(
                     "Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
-                n = n + 1
-                time.sleep(480)
+                time.sleep(5)
                 continue
     except:
         print(
