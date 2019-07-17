@@ -6,17 +6,16 @@ from requests import get
 
 
 def download(url, file_name):
-    '''
+    """
     function to download based on URL and file location
     url=url file_name=file location path
-    '''
+    """
     # open in binary mode- write file
-    with open(file_name, "wb") as file:
+    with open(file_name, 'wb') as file:
         # get request ask for the data from URL
         response = get(url)
         # write to file
         file.write(response.content)
-
 
 def save_url(search_terms, image_count, term):
     '''
