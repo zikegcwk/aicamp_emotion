@@ -18,7 +18,6 @@ def make_path(folder_path, file_prefix):
         # make sure the file_list only contains file end with .jpg or .png
 
         # iterate through a list
-
         for idx, img in enumerate(file_list):
             img_path = os.path.join(folder_path, img)
 
