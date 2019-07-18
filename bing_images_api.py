@@ -47,13 +47,10 @@ def save_url(search_terms, image_count, term):
         # res=response, search_results=list/dictionary of info, url=one captured URL, list_url=stored URLS from the search_terms
         for timer in range(offset_times):  # AND search_number is less than totalEstimatedMatches
             params.update({'offset': next_offset})
-            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,
-                               params=params)
+            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,params=params)
             search_results = res.json()
             if image_count > search_results.get('totalEstimatedMatches'):
-                print("Error, too many images requested. Requested {} images, {} images exist".format(image_count,
-                                                                                                      search_results.get(
-                                                                                                          'totalEstimatedMatches')))
+                print("Error, too many images requested. Requested {} images, {} images exist".format(image_count, search_results.get('totalEstimatedMatches')))
                 break
             else:
                 if search_results.get('value'):
@@ -97,13 +94,11 @@ def download_list(term, file_name, search_location):
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
             except:
-                print(
-                    "Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
-                time.sleep(5)
+                print("Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
+                time.sleep(10)
                 continue
     except:
-        print(
-            "The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
+        print("The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
 
 
 def checklist(term):
