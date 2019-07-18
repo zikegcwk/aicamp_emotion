@@ -4,21 +4,27 @@ from io import BytesIO
 import pandas as pd
 import numpy as np
 from sys import argv
+import ast
+import cv2
 
 def get_box_centers_all_emotions(sample_row):
     '''
-    input: A dictionary of the format {emotion1: [{geometry_box1: [list of 4 corner coordinates],
-                                                   geometry_box1: [list of 4 corner coordinates],
-                                                   ...}]
-                                       emotion2: [...],
-                                       ...
-                                       emotionN: [...]
-                                       }
-    output: A dictionary of the format {emotion1: [(center1 coordinates), (center1 coordinates), ...],
-                                        emotion2: [...],
-                                        ...
-                                        emotionN: [...]
-                                       }
+    input: A dictionary of the format 
+    {
+        emotion1: [{geometry_box1: [list of 4 corner coordinates],
+                    geometry_box1: [list of 4 corner coordinates], 
+                    ...}]
+        emotion2: [...],
+        ...
+        emotionN: [...]
+    }
+    output: A dictionary of the format 
+        {
+            emotion1: [(center1 coordinates), (center1 coordinates), ...],
+            emotion2: [...],
+            ...
+            emotionN: [...]
+        }
     '''
 
     lab = json.loads(sample_row)
@@ -45,66 +51,116 @@ def get_box_center(box_row):
     box_height = np.max(y_coords) - np.min(y_coords)
     return (x_center, y_center, box_width, box_height)
 
-def get_width_height(sample_row):
+def get_width_height_labelbox(sample_row):
     response = requests.get(sample_row)
     if response.status_code == 200: # !!!
         img = Image.open(BytesIO(response.content))
-    return (img.width, img.height)
+        return (img.width, img.height)
+    else:
+        return (0, 0)
+
+def get_width_height_local(file_name, image_folder_path, labelbox_url):
+    file_path = os.path.join(image_folder_path, file_name)
+
+    img_width, img_height = 0, 0
+    img = cv2.imread(file_path)
+    if img is not None:
+        img_height, img_width, channels = img.shape
+        print('returned local dimensions for {}: ({}, {})'.format(file_name, img_width, img_height))
+    else:
+        print('could not load image for {}'.format(file_name))
+    # except:
+    #     # (img_width, img_height) = get_width_height_labelbox(labelbox_url)
+    #     # print('labelbox requested for {}'.format(labelbox_url))
+    #     print('labelbox requested for {}'.format(labelbox_url))
+    #     return (0, 0)
+
+    return (img_width, img_height)
 
 def get_yolo_formats(emotion_dict, total_width, total_height):
     '''
-    Input: a dictionary of {emotion: [(box_x_center, box_y_center, box_width, box_height),
-                                      (box_x_center, box_y_center, box_width, box_height), ...]}
+    Input: a dictionary of 
+        {emotion: [
+            (box_x_center, box_y_center, box_width, box_height),
+            (box_x_center, box_y_center, box_width, box_height), ...]
+        }
     '''
     yolo_formats_to_write = []
-    for emotion, boxes in emotion_dict.items():
-#         class_id = label_map['class_id'][label_map['emotion']==emotion].values[0]
-        if emotion == 'happy':
-            class_id = 1
-        else:
-            class_id = 0
-            
+
+    if total_width == 0 or total_height == 0:
+        print('have 0 height or width. skipping file')
+        return yolo_formats_to_write
+
+    for emotion, boxes in emotion_dict.items():            
         for box in boxes:
-            box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
-            yolo_formats_to_write.append(','.join([str(class_id),
-                            str(box_x_center/total_width), str(box_y_center/total_height),
-                            str(box_width/total_width), str(box_height/total_height)]))
+            # only do happy for now. Will do more emotions later.
+            if emotion == 'happy':
+                class_id = 0
+                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+                yolo_formats_to_write.append(' '.join([str(class_id),
+                                str(box_x_center/total_width), str(box_y_center/total_height),
+                                str(box_width/total_width), str(box_height/total_height)]))
     return yolo_formats_to_write
 
-script, path_to_coords, filename = argv
 
-# Read raw data into memory
-raw = pd.read_csv(os.path.join(path_to_coords, filename))
-# label_map = pd.read_csv(os.path.join(path_to_labelMap, 'class_ids.txt'))
+if __name__ == '__main__':
 
-# Grab the relevant columns
-coords = raw[['External ID', 'Label', 'Labeled Data']]
+    script_name, path_to_coords, image_folder_path = argv
 
-# Remove the rows with no data
-coords = coords[coords['Label'] != 'Skip']
+    # Read raw data into memory
+    raw = pd.read_csv(path_to_coords)
 
-# Grab original image dimension. SLOW!!!
-coords['width_height'] = coords['Labeled Data'].apply(lambda row: get_width_height(row)) 
-# Extract total width and height of image from tuple.
-coords['total_width'] = coords['width_height'].apply(lambda s: int(str(s).split(',')[0][1:]))
-coords['total_height'] = coords['width_height'].apply(lambda s: int(str(s).split(',')[1].strip()[:-1]))
+    # Grab the relevant columns
+    # External ID is the file name of the image
+    # Label is the labeled data
+    # Labeled Data is the URL of the image stored in label box.
+    coords = raw[['External ID', 'Label', 'Labeled Data']]
 
-# Get box centers for each image sample
-coords['Centers'] = coords['Label'].apply(lambda s: get_box_centers_all_emotions(s))
+    # Remove the rows with no data
+    coords = coords[coords['Label'] != 'Skip']
 
-# Save the centers data to file
-# coords.to_csv(os.path.join(path_to_coords, 'box_centers.csv'), index=False)
-# coords = pd.read_csv(os.path.join(path_to_coords, 'box_centers.csv'))
+    # Grab original image dimension. 
+    # first try local file, if no local file, requests labelbox. 
+    # if no image, return 0, which we will skip the file.
+    coords['width_height'] = coords.apply(
+        lambda row: get_width_height_local(row['External ID'], image_folder_path, row['Labeled Data']),
+        axis=1
+    )
 
-for (i, cents, w, h) in zip(coords['External ID'],
-                          coords['Centers'],
-                          coords['total_width'], 
-                          coords['total_height']):
-    if isinstance(cents, str):
-        cents = ast.literal_eval(cents)
-    yolo_formats_to_write = get_yolo_formats(cents, w, h)
-#     print(yolo_formats_to_write)
-#     print()
-    with open(i.split('.')[0]+'.txt', 'w') as f:
-        for box in yolo_formats_to_write:
-            f.write("%s\n" % box)
+    # Extract total width and height of image from tuple.
+    coords['total_width'] = coords['width_height'].apply(lambda s: int(str(s).split(',')[0][1:]))
+    coords['total_height'] = coords['width_height'].apply(lambda s: int(str(s).split(',')[1].strip()[:-1]))
+
+    # Get box centers for each image sample
+    coords['Centers'] = coords['Label'].apply(lambda s: get_box_centers_all_emotions(s))
+
+    # Save the centers data to file
+    # coords.to_csv(os.path.join(path_to_coords, 'box_centers.csv'), index=False)
+    # coords = pd.read_csv(os.path.join(path_to_coords, 'box_centers.csv'))
+
+    processed_count = 0
+    failed_count = 0
+    for (img_file_name, cents, w, h) in zip(coords['External ID'],
+                            coords['Centers'],
+                            coords['total_width'], 
+                            coords['total_height']):
+        
+        if isinstance(cents, str):
+            cents = ast.literal_eval(cents)
+        
+        yolo_formats_to_write = get_yolo_formats(cents, w, h)
+        print(yolo_formats_to_write)
+    
+        if yolo_formats_to_write == []:
+            failed_count += 1
+            print('---xxx failed for file {}'.format(img_file_name))
+        else:
+            # save results
+            file_name = img_file_name.split('.')[0]+'.txt'
+            with open(os.path.join(image_folder_path, file_name), 'w') as f:
+                for box in yolo_formats_to_write:
+                    f.write("%s\n" % box)
+
+                print('--->>>> saved for file {}'.format(img_file_name))
+        processed_count += 1
+        print('processed: {}, failed: {}'.format(processed_count, failed_count))
