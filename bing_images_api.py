@@ -40,7 +40,7 @@ def save_url(search_terms, image_count, term):
             'market': 'en-us'
         }
         # Variables and calculation for offsets (150 max images, 35 per page)
-        offset_times = int((image_count / 150) + 1)
+        offset_times = int(image_count / 150)
         next_offset = 0
         list_url = []
         # Requests for ContentURL, loop to capture each URL
@@ -76,7 +76,7 @@ def save_url(search_terms, image_count, term):
                         prev_list_url = prev_list_url + list_url
                         prev_list_url = set(prev_list_url)
                         pickle.dump(prev_list_url, fp)
-                except OSError:
+                except:
                     with open('output_file_{}'.format(term), 'wb') as fp:
                         pickle.dump(list_url, fp)
 
