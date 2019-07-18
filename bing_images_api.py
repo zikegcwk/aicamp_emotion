@@ -1,15 +1,16 @@
 import pickle
 import time
+
 import get
 import requests
 from requests import get
 
 
 def download(url, file_name):
-    '''
+    """
     function to download based on URL and file location
     url=url file_name=file location path
-    '''
+    """
     # open in binary mode- write file
     with open(file_name, "wb") as file:
         # get request ask for the data from URL
@@ -19,12 +20,12 @@ def download(url, file_name):
 
 
 def save_url(search_terms, image_count, term):
-    '''
+    """
     function to call Bing Images API to give URLs of images and to save them to a outfile
     search_terms=word being searched, image_count=# of images, term=type of image (happy, sad, etc)
-    '''
+    """
     # Bing Images API Information for URL *Insert Subscription Key!*
-    subscription_key = ""
+    subscription_key = "a10ac1d7aff040f1b56a360ceb821b4f"
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
     for val in search_terms:
         params = {
@@ -39,18 +40,18 @@ def save_url(search_terms, image_count, term):
             'market': 'en-us'
         }
         # Variables and calculation for offsets (150 max images, 35 per page)
-        offset_times = int((image_count / 150) + 1)
+        offset_times = int(image_count / 150)
         next_offset = 0
         list_url = []
         # Requests for ContentURL, loop to capture each URL
         # res=response, search_results=list/dictionary of info, url=one captured URL, list_url=stored URLS from the search_terms
-        for timer in range(offset_times):# AND search_number is less than totalEstimatedMatches
+        for timer in range(offset_times):  # AND search_number is less than totalEstimatedMatches
             params.update({'offset': next_offset})
-            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers, params=params)
+            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,params=params)
             search_results = res.json()
             if image_count > search_results.get('totalEstimatedMatches'):
-               print("Error, too many images requested. Requested {} images, {} images exist".format(image_count, search_results.get('totalEstimatedMatches')))
-               break
+                print("Error, too many images requested. Requested {} images, {} images exist".format(image_count, search_results.get('totalEstimatedMatches')))
+                break
             else:
                 if search_results.get('value'):
                     for search_number in (search_results['value']):
@@ -70,43 +71,42 @@ def save_url(search_terms, image_count, term):
                     with open('output_file_{}'.format(term), 'rb') as fp:
                         prev_list_url = pickle.load(fp)
                         prev_list_url = prev_list_url + list_url
-                        prev_list_url = set(prev_list_url)
+                        prev_list_url = list(set(prev_list_url))
+                    with open('output_file_{}'.format(term), 'wb') as fp:
                         pickle.dump(prev_list_url, fp)
                 except:
                     with open('output_file_{}'.format(term), 'wb') as fp:
-                        pickle.dump(list_url, fp)
+                    pickle.dump(list_url, fp)
 
 
-def downloadlist(term, file_name, search_location):
-    '''
+def download_list(term, file_name, search_location):
+    """
     downloads the list stored in the outfile, removes duplicate urls as well
     file_name=name to call images, search_location= save location path
-    '''
+    """
     # do the try and search
     with open('output_file_{}'.format(term), 'rb') as fp:
         download_urls = pickle.load(fp)
     download_urls = set(download_urls)
     total = len(download_urls)
     try:
-        for idx, val in enumerate (download_urls, start = 1):
+        for idx, val in enumerate(download_urls, start=1):
             try:
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
             except:
-                print(
-                    "Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
-                time.sleep(5)
+                print("Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
+                time.sleep(10)
                 continue
     except:
-        print(
-            "The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
+        print("The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
 
 
 def checklist(term):
-    '''
+    """
     checks total amount of images stored to see if more needs to be downloaded
     term=outfile+term, or type of image (happy, sad, etc.)
-    '''
+    """
     with open('output_file_{}'.format(term), 'rb') as fp:
         download_urls = pickle.load(fp)
     download_urls = set(download_urls)
@@ -119,9 +119,9 @@ if __name__ == '__main__':
 
     # To save the urls
     # input search words
-    #search_terms = ['happy']
+    #search_terms = ['happy person', 'smiling person']
     # (Use multiples of 150 for searches etc 150, 300, 450) input amount of images to search
-    #image_count = 130
+    #image_count = 200
     # input TYPE of image searched (happy, sad, etc).
     #term = "happy"
     #save_url(search_terms, image_count, term)
