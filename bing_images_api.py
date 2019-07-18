@@ -47,10 +47,13 @@ def save_url(search_terms, image_count, term):
         # res=response, search_results=list/dictionary of info, url=one captured URL, list_url=stored URLS from the search_terms
         for timer in range(offset_times):  # AND search_number is less than totalEstimatedMatches
             params.update({'offset': next_offset})
-            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,params=params)
+            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,
+                               params=params)
             search_results = res.json()
             if image_count > search_results.get('totalEstimatedMatches'):
-                print("Error, too many images requested. Requested {} images, {} images exist".format(image_count, search_results.get('totalEstimatedMatches')))
+                print("Error, too many images requested. Requested {} images, {} images exist".format(image_count,
+                                                                                                      search_results.get(
+                                                                                                          'totalEstimatedMatches')))
                 break
             else:
                 if search_results.get('value'):
@@ -95,11 +98,13 @@ def download_list(term, file_name, search_location):
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
             except:
-                print("Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
+                print(
+                    "Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
                 time.sleep(10)
                 continue
     except:
-        print("The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
+        print(
+            "The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
 
 
 def checklist(term):
@@ -115,27 +120,31 @@ def checklist(term):
 
 
 if __name__ == '__main__':
-    # Before running, add subscription key!
+    download()
+    save_url()
+    download_list()
+    checklist()
+# Before running, add subscription key!
 
-    # To save the urls
-    # input search words
-    #search_terms = ['happy person', 'smiling person']
-    # (Use multiples of 150 for searches etc 150, 300, 450) input amount of images to search
-    #image_count = 200
-    # input TYPE of image searched (happy, sad, etc).
-    #term = "happy"
-    #save_url(search_terms, image_count, term)
+# To save the urls
+# input search words
+# search_terms = ['happy person', 'smiling person']
+# (Use multiples of 150 for searches etc 150, 300, 450) input amount of images to search
+# image_count = 200
+# input TYPE of image searched (happy, sad, etc).
+# term = "happy"
+# save_url(search_terms, image_count, term)
 
-    # To download the urls
-    # input the TYPE of image searched
-    #term = "happy"
-    # input the name of the file (will name by file_name(1, 2, etc)
-    #file_name = "happy people"
-    # input where you want to save the file (for WINDOWS please add "r" BEFORE the search location, etc r"C:/Users/..."
-    #search_location = r"C:\Banana\BingAPI\Test"
-    #download_list(term, file_name, search_location)
+# To download the urls
+# input the TYPE of image searched
+# term = "happy"
+# input the name of the file (will name by file_name(1, 2, etc)
+# file_name = "happy people"
+# input where you want to save the file (for WINDOWS please add "r" BEFORE the search location, etc r"C:/Users/..."
+# search_location = r"C:\Banana\BingAPI\Test"
+# download_list(term, file_name, search_location)
 
-    # To check how many images are downloaded
-    # input the TYPE of image searched
-    # term = "happy"
-    #checklist(term)
+# To check how many images are downloaded
+# input the TYPE of image searched
+# term = "happy"
+# checklist(term)
