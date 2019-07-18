@@ -40,7 +40,7 @@ def save_url(search_terms, image_count, term):
             'market': 'en-us'
         }
         # Variables and calculation for offsets (150 max images, 35 per page)
-        offset_times = int(image_count / 150)
+        offset_times = int((image_count / 150) + 1)
         next_offset = 0
         list_url = []
         # Requests for ContentURL, loop to capture each URL
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     #file_name = "happy people"
     # input where you want to save the file (for WINDOWS please add "r" BEFORE the search location, etc r"C:/Users/..."
     #search_location = r"C:\Banana\BingAPI\Test"
-    #downloadlist(term, file_name, search_location)
+    #download_list(term, file_name, search_location)
 
     # To check how many images are downloaded
     # input the TYPE of image searched
