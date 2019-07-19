@@ -1,7 +1,7 @@
 import os
 import sys
 
-def make_path(folder_path, file_prefix):
+def make_path(folder_path, file_prefix, output_path):
     '''split image files into train and validation dataset. 
         store their paths into txt files
     '''
@@ -20,8 +20,8 @@ def make_path(folder_path, file_prefix):
                 print('could not find image file: {}'.format(image_file))
     
     # how to open a file in a write mode
-        train_f = open(file_prefix + '_train.txt', 'w')
-        test_f = open(file_prefix + '_test.txt', 'w')
+        train_f = open(os.path.join(output_path, file_prefix + '_train.txt'), 'w')
+        test_f = open(os.path.join(output_path, file_prefix + '_test.txt'), 'w')
 
     # iterate through a list
     
@@ -38,11 +38,10 @@ def make_path(folder_path, file_prefix):
     train_f.close()
     test_f.close()
 
-
 if __name__ == '__main__':
     # inputs
     args = sys.argv
     # example: 
     # argv[1] = '/Users/mutishuman/Documents/images/happyface'
     # argv[2] = 'happy_bing_
-    make_path(args[1], args[2])
+    make_path(args[1], args[2], args[3])
