@@ -69,11 +69,6 @@ def get_width_height_local(file_name, image_folder_path, labelbox_url):
         print('returned local dimensions for {}: ({}, {})'.format(file_name, img_width, img_height))
     else:
         print('could not load image for {}'.format(file_name))
-    # except:
-    #     # (img_width, img_height) = get_width_height_labelbox(labelbox_url)
-    #     # print('labelbox requested for {}'.format(labelbox_url))
-    #     print('labelbox requested for {}'.format(labelbox_url))
-    #     return (0, 0)
 
     return (img_width, img_height)
 
