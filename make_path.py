@@ -29,19 +29,17 @@ def make_path(folder_path, file_prefix, output_path):
             img_path = os.path.join(folder_path, img)
 
             if idx % 9 == 0:
-             # write data into a file
-                 test_f.write(img_path + '\n')
+                # write data into a file
+                test_f.write(img_path + '\n')
             else:
-                 train_f.write(img_path + '\n')
-    
+                train_f.write(img_path + '\n')
 
     train_f.close()
     test_f.close()
 
 if __name__ == '__main__':
     # inputs
-    args = sys.argv
-    # example: 
+    # example:
     # argv[1] = '/Users/mutishuman/Documents/images/happyface'
-    # argv[2] = 'happy_bing_
+    # argv[2] = 'happy_bing
     make_path(args[1], args[2], args[3])

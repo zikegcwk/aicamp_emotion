@@ -1,4 +1,4 @@
-# A very simple Flask Hello World app for you to get started with...
+# TODO add docstrings
 import os
 
 from flask import Flask, flash, request, redirect, render_template
@@ -9,7 +9,7 @@ app = Flask(__name__)
 upload_folder = os.path.join(os.getcwd(), 'images')
 
 # TODO set to non-version controlled file
-app.secret_key = "secret key"
+app.secret_key = 'secret key'
 
 app.config['upload_folder'] = upload_folder
 accepted_extensions = {'jpg', 'jpeg', 'png', 'gif'}
@@ -40,5 +40,5 @@ def upload_file():
         return redirect('/')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()

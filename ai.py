@@ -13,7 +13,7 @@ def yolo_forward(net, labels, image, confidence_level, threshold, save_image=Fal
     # initialize a list of colors to represent each possible class label
     np.random.seed(42)
     colors = np.random.randint(0, 255, size=(10000, 3),
-                               dtype="uint8")
+                               dtype='uint8')
 
     # grab image spatial dimensions
     (H, W) = image.shape[:2]
@@ -34,7 +34,7 @@ def yolo_forward(net, labels, image, confidence_level, threshold, save_image=Fal
     end = time.time()
 
     # show timing information on YOLO
-    print("[INFO] YOLO took {:.6f} seconds".format(end - start))
+    print('[INFO] YOLO took {:.6f} seconds'.format(end - start))
 
     # initialize our lists of detected bounding boxes, confidences, and
     # class IDs, respectively
@@ -60,7 +60,7 @@ def yolo_forward(net, labels, image, confidence_level, threshold, save_image=Fal
                 # returns the center (x, y)-coordinates of the bounding
                 # box followed by the boxes' width and height
                 box = detection[0:4] * np.array([W, H, W, H])
-                (centerX, centerY, width, height) = box.astype("int")
+                (centerX, centerY, width, height) = box.astype('int')
 
                 # use the center (x, y)-coordinates to derive the top and
                 # and left corner of the bounding box
@@ -97,7 +97,7 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
         # draw a bounding box rectangle and label on the image
         color = [int(c) for c in colors[class_ids[i]]]
         cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-        text = "{}: {:.4f}".format(labels[i], confidences[i])
+        text = '{}: {:.4f}'.format(labels[i], confidences[i])
         print(text)
         cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
@@ -115,7 +115,7 @@ def get_yolo_net(cfg_path, weight_path, confidence_level=0.5, threshold=0.3):
         raise Exception('missing inputs. See file.')
 
     # load our YOLO object detector trained on COCO dataset (80 classes)
-    print("[INFO] loading YOLO from disk...")
+    print('[INFO] loading YOLO from disk...')
     net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
 
     return net
