@@ -188,7 +188,7 @@ def yolo_video(name_path, cfg_path, weight_path):
                 cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
                 text = "{}: {:.4f}".format(labels[i], confidences[i])
                 print(text)
-                cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 4)
+                cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
             
         cv2.imshow("yolo prediction", image)
         print('video mode')

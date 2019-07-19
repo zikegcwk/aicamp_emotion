@@ -96,7 +96,7 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
 
     for emotion, boxes in emotion_dict.items():
         for box in boxes:
-            # only do happy for now. Will do more emotions later.
+            # only do happy and neutral for now. Will do more emotions later.
             if emotion == 'happy':
                 class_id = 0
                 box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
@@ -104,6 +104,14 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
                                                        str(box_x_center / total_width),
                                                        str(box_y_center / total_height),
                                                        str(box_width / total_width), str(box_height / total_height)]))
+            if emotion == 'neutral':
+                class_id = 1
+                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+                yolo_formats_to_write.append(' '.join([str(class_id),
+                                                       str(box_x_center / total_width),
+                                                       str(box_y_center / total_height),
+                                                       str(box_width / total_width), str(box_height / total_height)]))
+
     return yolo_formats_to_write
 
 
