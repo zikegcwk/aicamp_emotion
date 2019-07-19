@@ -1,3 +1,6 @@
+Pillow
+pandas
+numpy
 flask
 werkzeug
 get

@@ -1,0 +1,8 @@
+emotion,class_id
+happy,0
+sad,1
+surprised,2
+fear,3
+disgust,4
+angry,5
+neutral,6

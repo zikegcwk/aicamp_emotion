@@ -44,7 +44,10 @@ def label_faces():
         sys.exit(1)
 
     # cycles through each file in the directory
+    total_count = 0
+    saved_count = 0
     for img_file in os.listdir(emotion_folder):
+        total_count += 1
         if img_file.endswith(('.png', '.jpg')):
             face_cascade = cv2.CascadeClassifier(cascade_file)  # face detection idk how it works
             try:
@@ -54,18 +57,21 @@ def label_faces():
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
-            label = open(os.path.join(emotion_folder, img_file.split('.')[0] + '.txt'), 'w')
-
             for (x, y, w, h) in faces:  # TODO add eye checking to make recognition more accurate
                 img_h, img_w = img.shape[:2]
-                try:
+                if img_h == 0 or img_w == 0:
+                    # ingore images that have zero dimension
+                    print('image {} has zero dimension'.format(img_file))
+                    continue
+                else:
                     center_x = (x + w / 2) / img_w
                     center_y = (y + h / 2) / img_h
                     rel_w = w / img_w
                     rel_h = h / img_h
-                except ZeroDivisionError:
-                    continue  # writes to the text file in YOlO format
-                label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
+                    label = open(os.path.join(emotion_folder, img_file.split('.')[0] + '.txt'), 'w')
+                    label.write('{} {} {} {} {}'.format(class_id, center_x, center_y, rel_w, rel_h))
+                    print('wrote data for {}'.format(img_file))
+                    saved_count += 1
 
             if len(faces) > 1:
                 index.write('{}\n'.format(img_file))
@@ -76,6 +82,8 @@ def label_faces():
                 log.write('No faces detected in {}'.format(img_file))
 
             label.close()
+    
+        print('total count: {}, saved count: {}'.format(total_count, saved_count))
     cv2.destroyAllWindows()
     index.close()
 

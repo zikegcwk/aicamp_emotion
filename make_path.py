@@ -2,7 +2,7 @@ import os
 import sys
 
 
-def make_path(folder_path, file_prefix):
+def make_path(folder_path, file_prefix, output_path):
     """split image files into train and validation dataset.
         store their paths into txt files
     """
@@ -10,15 +10,22 @@ def make_path(folder_path, file_prefix):
     file_list = os.listdir(folder_path)
 
     # how to open a file in a write mode
-    train_f = open(file_prefix + '_train.txt', 'w')
-    test_f = open(file_prefix + '_test.txt', 'w')
+    train_f = open(os.path.join(output_path, file_prefix + '_train.txt'), 'w')
+    test_f = open(os.path.join(output_path, file_prefix + '_test.txt'), 'w')
 
-    for file in file_list:
-        print(folder_path, file)
-        # make sure the file_list only contains file end with .jpg or .png
+    all_label_files = []
+    good_image_files = []
+    for file1 in file_list:
+        if '.txt' in file1:
+            all_label_files.append(file1)
+            image_file = file1.split('.txt')[0] + '.png'
+            if image_file in file_list:
+                good_image_files.append(image_file)
+            else:
+                print('could not find image file: {}'.format(image_file))
 
         # iterate through a list
-        for idx, img in enumerate(file_list):
+        for idx, img in enumerate(good_image_files):
             img_path = os.path.join(folder_path, img)
 
             if idx % 9 == 0:
@@ -35,5 +42,5 @@ if __name__ == '__main__':
     # inputs
     # example:
     # argv[1] = '/Users/mutishuman/Documents/images/happyface'
-    # argv[2] = 'happy_bing_
-    make_path(sys.argv[1], sys.argv[2])
+    # argv[2] = 'happy_bing
+    make_path(sys.argv[1], sys.argv[2], sys.argv[3])
