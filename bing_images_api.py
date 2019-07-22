@@ -43,11 +43,12 @@ def save_url(search_terms, image_count, term):
         offset_times = int(image_count / 150)
         next_offset = 0
         list_url = []
-        # Requests for ContentURL, loop to capture each URL
-        # res=response, search_results=list/dictionary of info, url=one captured URL, list_url=stored URLS from the search_terms
+        # Requests for ContentURL, loop to capture each URL res=response, search_results=list/dictionary of info,
+        # url=one captured URL, list_url=stored URLS from the search_terms
         for timer in range(offset_times):  # AND search_number is less than totalEstimatedMatches
             params.update({'offset': next_offset})
-            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,params=params)
+            res = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=", headers=headers,
+                               params=params)
             search_results = res.json()
             if search_results.get('value'):
                 for search_number in (search_results['value']):
@@ -91,11 +92,13 @@ def download_list(term, file_name, search_location):
                 download("{}".format(val), search_location + "/" + file_name + "{}".format(idx) + ".png")
                 print("currently downloading:{} out of {}".format(idx, total))
             except:
-                print("Image downloaded is invalid or cannot be reached (internet), continuing with next image after a delay.")
+                print("Image downloaded is invalid or cannot be reached (internet), continuing with next image after "
+                      "a delay.")
                 time.sleep(10)
                 continue
     except:
-        print("The folder location does not exist or the reference command failed. Please create a folder (case sensitive) or do a search.")
+        print("The folder location does not exist or the reference command failed. Please create a folder (case "
+              "sensitive) or do a search.")
 
 
 def checklist(term):
@@ -124,12 +127,12 @@ if __name__ == '__main__':
 
     # To download the urls
     # input the TYPE of image searched
-    #term = "happy"
+    # term = "happy"
     # input the name of the file (will name by file_name(1, 2, etc)
-    #file_name = "scared_people_"
+    # file_name = "scared_people_"
     # input where you want to save the file (for WINDOWS please add "r" BEFORE the search location, etc r"C:/Users/..."
-    #search_location = r"B:\Libraries\Google Drive\Pycharm\BingAPI\Fear"
-    #download_list(term, file_name, search_location)
+    # search_location = r"B:\Libraries\Google Drive\Pycharm\BingAPI\Fear"
+    # download_list(term, file_name, search_location)
 
     # To check how many images are downloaded
     # input the TYPE of image searched

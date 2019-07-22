@@ -3,10 +3,9 @@ import time
 
 import cv2
 import numpy as np
-from sys import argv
 
 
-def yolo_forward(net, labels, image, confidence_level, threshold, save_image=False):
+def yolo_forward(net, labels, image, confidence_level, save_image=False):
     """
     forward data through YOLO network
     """
@@ -50,8 +49,8 @@ def yolo_forward(net, labels, image, confidence_level, threshold, save_image=Fal
             # extract the class ID and confidence (i.e., probability) of
             # the current object detection
             scores = detection[5:]
-            classID = np.argmax(scores)
-            confidence = scores[classID]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
 
             # filter out weak predictions by ensuring the detected
             # probability is greater than the minimum probability
@@ -72,7 +71,7 @@ def yolo_forward(net, labels, image, confidence_level, threshold, save_image=Fal
                 # and class IDs
                 boxes.append([x, y, int(width), int(height)])
                 confidences.append(float(confidence))
-                class_ids.append(classID)
+                class_ids.append(class_id)
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
@@ -105,6 +104,7 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
     cv2.imwrite(file_path, image)
     return image
 
+
 def yolo_show_img(image, class_ids, boxes, labels, confidences, colors):
     """
     show without save a image with bounding boxes
@@ -123,9 +123,9 @@ def yolo_show_img(image, class_ids, boxes, labels, confidences, colors):
 
     cv2.imshow('yolo prediction', image)
     cv2.waitKey(0)
-    
 
-def get_yolo_net(cfg_path, weight_path, confidence_level=0.5, threshold=0.3):
+
+def get_yolo_net(cfg_path, weight_path):
     """
     return YOLO net.
     run this function when app starts to load the net.
@@ -140,61 +140,63 @@ def get_yolo_net(cfg_path, weight_path, confidence_level=0.5, threshold=0.3):
 
     return net
 
+
 def yolo_pred(image_path, names_path, cfg_path, weight_path):
     # get the net using cfg and weight
     net = get_yolo_net(cfg_path, weight_path)
-    
+
     # prepare labels and colors
-    LABELS = open(names_path).read().strip().split("\n")
+    labels = open(names_path).read().strip().split('\n')
     np.random.seed(42)
-    COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
+    colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
 
     # read images
     image = cv2.imread(image_path)
 
     (class_ids, labels, boxes, confidences) = yolo_forward(
-        net, LABELS, image, confidence_level=0.5, threshold=0.3)
+        net, labels, image, confidence_level=0.5)
 
-    yolo_show_img(image, class_ids, boxes, labels, confidences, COLORS)
+    yolo_show_img(image, class_ids, boxes, labels, confidences, colors)
+
 
 def yolo_video(name_path, cfg_path, weight_path):
     # get the net using cfg and weight
     net = get_yolo_net(cfg_path, weight_path)
-    
+
     # prepare labels and colors
-    LABELS = open(name_path).read().strip().split("\n")
+    labels = open(name_path).read().strip().split('\n')
     np.random.seed(42)
-    COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
+    colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
 
     cam = cv2.VideoCapture(0)
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-    cv2.namedWindow("yolo prediction")
+    cv2.namedWindow('yolo prediction')
     while True:
         ret, image = cam.read()
         # time.sleep(1)
         (class_ids, labels, boxes, confidences) = yolo_forward(
-            net, LABELS, image, confidence_level=0.5, threshold=0.3)
-                
+            net, labels, image, confidence_level=0.5)
+
         if len(class_ids) > 0:
             for i, box in enumerate(boxes):
                 # extract the bounding box coordinates
                 (x, y) = (box[0], box[1])
                 (w, h) = (box[2], box[3])
-                    
+
                 # draw a bounding box rectangle and label on the image
-                color = [int(c) for c in COLORS[class_ids[i]]]
+                color = [int(c) for c in colors[class_ids[i]]]
                 cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-                text = "{}: {:.4f}".format(labels[i], confidences[i])
+                text = '{}: {:.4f}'.format(labels[i], confidences[i])
                 print(text)
                 cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-            
-        cv2.imshow("yolo prediction", image)
+
+        cv2.imshow('yolo prediction', image)
         print('video mode')
         k = cv2.waitKey(1)
 
-        if k==27:    # Esc key to stop
+        if k == 27:  # Esc key to stop
             cv2.waitKey(1)
             cam.release()
             break
