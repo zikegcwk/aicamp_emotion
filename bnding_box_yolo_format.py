@@ -111,6 +111,27 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
                                                        str(box_x_center / total_width),
                                                        str(box_y_center / total_height),
                                                        str(box_width / total_width), str(box_height / total_height)]))
+            if emotion == 'surprised':
+                class_id = 2
+                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+                yolo_formats_to_write.append(' '.join([str(class_id),
+                                                       str(box_x_center / total_width),
+                                                       str(box_y_center / total_height),
+                                                       str(box_width / total_width), str(box_height / total_height)]))
+            if emotion == 'angry':
+                class_id = 3
+                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+                yolo_formats_to_write.append(' '.join([str(class_id),
+                                                       str(box_x_center / total_width),
+                                                       str(box_y_center / total_height),
+                                                       str(box_width / total_width), str(box_height / total_height)]))
+            if emotion == 'sad':
+                class_id = 4
+                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+                yolo_formats_to_write.append(' '.join([str(class_id),
+                                                       str(box_x_center / total_width),
+                                                       str(box_y_center / total_height),
+                                                       str(box_width / total_width), str(box_height / total_height)]))
 
     return yolo_formats_to_write
 
