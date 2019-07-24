@@ -17,10 +17,10 @@ def main():
         emotion = 'happy'
         print('Emotion set to default \'happy\'.')
     try:  # set number of pics to take each time
-        numpics = sys.argv[2]
-        print('Number of images set to {}'.format(numpics))
+        num_pics = sys.argv[2]
+        print('Number of images set to {}'.format(num_pics))
     except IndexError:
-        numpics = 150
+        num_pics = 150
         print('Number of images set to default 150.')
 
     path = os.path.join(os.getcwd(), 'images', emotion)
@@ -60,7 +60,7 @@ def main():
             print('Escape hit, closing...')
             break
         if k % 256 == 32:  # space pressed
-            for x in range(0, numpics):  # TODO add built-in user initiated break from this loop
+            for x in range(0, num_pics):  # TODO add built-in user initiated break from this loop
                 ret, frame = cam.read()
                 cv2.imshow('test', frame)
                 cv2.waitKey(1)
