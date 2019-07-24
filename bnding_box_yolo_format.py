@@ -96,21 +96,24 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
 
     for emotion, boxes in emotion_dict.items():
         for box in boxes:
-            # only do happy and neutral for now. Will do more emotions later.
             if emotion == 'happy':
                 class_id = 0
-                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
-                yolo_formats_to_write.append(' '.join([str(class_id),
-                                                       str(box_x_center / total_width),
-                                                       str(box_y_center / total_height),
-                                                       str(box_width / total_width), str(box_height / total_height)]))
-            if emotion == 'neutral':
+            elif emotion == 'neutral':
                 class_id = 1
-                box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
-                yolo_formats_to_write.append(' '.join([str(class_id),
-                                                       str(box_x_center / total_width),
-                                                       str(box_y_center / total_height),
-                                                       str(box_width / total_width), str(box_height / total_height)]))
+            elif emotion == 'surprised':
+                class_id = 2
+            elif emotion == 'sad':
+                class_id = 3
+            elif emotion == 'angry':
+                class_id = 4
+            else:
+                continue
+        
+            box_x_center, box_y_center, box_width, box_height = box[0], box[1], box[2], box[3]
+            yolo_formats_to_write.append(' '.join([str(class_id),
+                                                    str(box_x_center / total_width),
+                                                    str(box_y_center / total_height),
+                                                    str(box_width / total_width), str(box_height / total_height)]))
 
     return yolo_formats_to_write
 
@@ -126,16 +129,17 @@ if __name__ == '__main__':
     # External ID is the file name of the image
     # Label is the labeled data
     # Labeled Data is the URL of the image stored in label box.
-    coords = raw[['External ID', 'Label', 'Labeled Data']]
+    coords = raw[['External ID', 'Label', 'Labeled Data', 'ID']]
 
     # Remove the rows with no data
     coords = coords[coords['Label'] != 'Skip']
+    coords['local_file'] = coords['ID'] + '-' + coords['External ID']
 
     # Grab original image dimension. 
     # first try local file, if no local file, requests labelbox. 
     # if no image, return 0, which we will skip the file.
     coords['width_height'] = coords.apply(
-        lambda row: get_width_height_local(row['External ID'], image_folder_path, row['Labeled Data']),
+        lambda row: get_width_height_local(row['local_file'], image_folder_path, row['Labeled Data']),
         axis=1
     )
 
@@ -152,7 +156,7 @@ if __name__ == '__main__':
 
     processed_count = 0
     failed_count = 0
-    for (img_file_name, cents, w, h) in zip(coords['External ID'],
+    for (img_file_name, cents, w, h) in zip(coords['local_file'],
                                             coords['Centers'],
                                             coords['total_width'],
                                             coords['total_height']):
