@@ -40,6 +40,7 @@ def make_path(folder_path, file_prefix, output_path):
             train_f.write(img_path + '\n')
             print('done writing for img {}'.format(img_path))
 
+
     train_f.close()
     print('train saved')
     valid_f.close()
