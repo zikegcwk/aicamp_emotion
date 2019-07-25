@@ -111,3 +111,5 @@ venv.bak/
 /.idea/*
 /images/*
 /labelimg/*
+*.weights
+/yolo-cfg/clem1/backup/*
