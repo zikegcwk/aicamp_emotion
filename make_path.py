@@ -28,17 +28,18 @@ def make_path(folder_path, file_prefix, output_path):
             else:
                 print('could not find image file for : {}'.format(file1))
 
-        # iterate through a list
-        for idx, img in enumerate(good_image_files):
-            img_path = os.path.join(folder_path, img)
+    # iterate through a list
+    for idx, img in enumerate(good_image_files):
+        img_path = os.path.join(folder_path, img)
 
-            if idx % 8 == 0:
-                # write data into a file
-                valid_f.write(img_path + '\n')
-                print('done writing for img {}'.format(img_path))
-            else:
-                train_f.write(img_path + '\n')
-                print('done writing for img {}'.format(img_path))
+        if idx % 8 == 0:
+            # write data into a file
+            valid_f.write(img_path + '\n')
+            print('done writing for img {}'.format(img_path))
+        else:
+            train_f.write(img_path + '\n')
+            print('done writing for img {}'.format(img_path))
+
 
     train_f.close()
     print('train saved')
