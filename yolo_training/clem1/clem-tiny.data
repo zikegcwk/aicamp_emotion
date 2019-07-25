@@ -1,0 +1,6 @@
+classes = 5
+train = clem1/clem_train.txt
+valid = clem1/clem_valid.txt
+names = clem1/clem.names
+backup = clem1/backup-tiny/
+
