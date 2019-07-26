@@ -66,7 +66,7 @@ def get_width_height_labelbox(sample_row):
         return 0, 0
 
 
-def get_width_height_local(file_name, image_folder_path, labelbox_url):
+def get_width_height_local(file_name, image_folder_path):
     file_path = os.path.join(image_folder_path, file_name)
 
     img_width, img_height = 0, 0
@@ -102,10 +102,10 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
                 class_id = 1
             elif emotion == 'surprised':
                 class_id = 2
-            elif emotion == 'sad':
-                class_id = 3
-            elif emotion == 'angry':
-                class_id = 4
+            # elif emotion == 'sad':
+            #     class_id = 3
+            # elif emotion == 'angry':
+            #     class_id = 4
             else:
                 continue
         
@@ -139,7 +139,7 @@ if __name__ == '__main__':
     # first try local file, if no local file, requests labelbox. 
     # if no image, return 0, which we will skip the file.
     coords['width_height'] = coords.apply(
-        lambda row: get_width_height_local(row['local_file'], image_folder_path, row['Labeled Data']),
+        lambda row: get_width_height_local(row['local_file'], image_folder_path),
         axis=1
     )
 
@@ -156,6 +156,21 @@ if __name__ == '__main__':
 
     processed_count = 0
     failed_count = 0
+    
+    # no label will exceed this limit
+    class_limit = 2000
+    total_counter = {
+        '0': 0,
+        '1': 0,
+        '2': 0
+    }
+
+    write_counter = {
+        '0': 0,
+        '1': 0,
+        '2': 0
+    }
+
     for (img_file_name, cents, w, h) in zip(coords['local_file'],
                                             coords['Centers'],
                                             coords['total_width'],
@@ -170,13 +185,33 @@ if __name__ == '__main__':
         if not yolo_formats_to_write:
             failed_count += 1
             print('---xxx failed for file {}'.format(img_file_name))
-        else:
-            # save results
+            continue
+
+        # check if limit exceeded
+        lines_to_write = []
+        for box in yolo_formats_to_write:
+            class_id = box.split(' ')[0]
+            total_counter[class_id] += 1
+            if total_counter[class_id] < class_limit:
+                lines_to_write.append(box)
+            else:
+                print('skipping for {} at {}'.format(
+                    box,
+                    img_file_name
+                ))
+
+        # save results
+        if len(lines_to_write) > 0:
             file_name = img_file_name.split('.')[0] + '.txt'
             with open(os.path.join(image_folder_path, file_name), 'w') as f:
-                for box in yolo_formats_to_write:
+                for box in lines_to_write:
+                    class_id = box.split(' ')[0]
+                    write_counter[class_id] += 1
                     f.write('%s\n' % box)
-
                 print('--->>>> saved for file {}'.format(img_file_name))
+            
         processed_count += 1
         print('processed: {}, failed: {}'.format(processed_count, failed_count))
+    
+    print(write_counter)
+    print(total_counter)
