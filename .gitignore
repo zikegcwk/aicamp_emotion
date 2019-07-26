@@ -111,4 +111,5 @@ venv.bak/
 /.idea/*
 /images/*
 /labelimg/*
-yolo_training/clem1/backup/
+yolo_training/clemv1/backup/
+yolo_training/chart\.png
