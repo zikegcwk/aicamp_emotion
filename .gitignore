@@ -113,3 +113,7 @@ venv.bak/
 /labelimg/*
 yolo_training/clemv1/backup/
 yolo_training/chart\.png
+
+yolo_training/clem-tinyv1/backup/
+
+yolo_training/clemv1/backupv2/
