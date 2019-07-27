@@ -1,9 +1,9 @@
 # AIEIO
 
-[![Contributors](https://img.shields.io/github/contributors/zikegcwk/aicamp)](https://github.com/zikegcwk/aicamp/graphs/contributors)
+[![Contributors][contrib-shield]][contrib-url]
 [![Commit Activity][commit-shield]][commit-url]
-[![Size](https://img.shields.io/github/repo-size/zikegcwk/aicamp)](https://github.com/zikegcwk/aicamp)
-[![License: WTFPL](https://img.shields.io/github/license/zikegcwk/aicamp)](https://github.com/zikegcwk/aicamp/blob/master/license.txt)  
+[![Size][size-shield]][size-url]
+[![License: WTFPL][license-shield]][license-url]
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![LinkedIn][linkedin-shield]][linkedin-url1]
@@ -16,8 +16,14 @@
 
 AIEIO is an emotion detector built by high schoolers using [YOLO](https://pjreddie.com/darknet/yolo/)
 
+[contrib-shield]:https://img.shields.io/github/contributors/zikegcwk/aicamp
+[contrib-url]:https://github.com/zikegcwk/aicamp/graphs/contributors
 [commit-shield]: https://img.shields.io/github/commit-activity/w/zikegcwk/aicamp
 [commit-url]: https://github.com/zikegcwk/aicamp/graphs/contributors
+[size-shield]:https://img.shields.io/github/repo-size/zikegcwk/aicamp
+[size-url]:https://github.com/zikegcwk/aicamp
+[license-shield]:https://img.shields.io/github/license/zikegcwk/aicamp
+[license-url]:https://github.com/zikegcwk/aicamp/blob/master/license.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/michaelkezhang/
 [linkedin-url1]: https://www.linkedin.com/in/azzurraying/
