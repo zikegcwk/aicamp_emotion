@@ -11,7 +11,7 @@ def main():
     '''
     # set the parameters
     LABELS = ['happy', 'poker', 'surprised']
-    image_folder = '/Users/mkz/Google Drive/ai-camp/project_aieio/test_data/happy'
+    image_folder = '/Users/mkz/Google Drive/ai-camp/project_aieio/test_data/surprised'
     all_files = os.listdir(image_folder)
     image_files = [f for f in all_files if f.endswith('.jpg') or f.endswith('.png')]
     cfg_path = '/Users/mkz/code/aicamp/zk-yolov3-tiny.cfg'
@@ -28,6 +28,10 @@ def main():
         print(image_path)
         image = cv2.imread(image_path)
         (class_ids, labels, boxes, confidences) = yolo_forward(yolo_net, LABELS, image, confidence_level, save_image=False)
+        # so there are several possibilities. 
+        # if we get the matching id, we will then just output the matching id. 
+        # if not getting the matching id, we just output the first one. 
+        # but what if there is no id at all? What if that is the case? 
         yolo_save_img(image, class_ids, boxes, labels, confidences, colors, 
             os.path.join(
                 image_folder, 

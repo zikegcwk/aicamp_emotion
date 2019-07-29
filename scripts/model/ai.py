@@ -200,9 +200,9 @@ def yolo_video(name_path, cfg_path, weight_path):
     net = get_yolo_net(cfg_path, weight_path)
 
     # prepare labels and colors
-    labels = open(name_path).read().strip().split('\n')
+    LABELS = open(name_path).read().strip().split('\n')
     np.random.seed(42)
-    colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+    colors = np.random.randint(0, 255, size=(len(LABELS), 3), dtype='uint8')
 
     cam = cv2.VideoCapture(0)
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -213,7 +213,7 @@ def yolo_video(name_path, cfg_path, weight_path):
         ret, image = cam.read()
         # time.sleep(1)
         (class_ids, labels, boxes, confidences) = yolo_forward(
-            net, labels, image, confidence_level=0.5)
+            net, LABELS, image, confidence_level=0.3)
 
         if len(class_ids) > 0:
             for i, box in enumerate(boxes):
