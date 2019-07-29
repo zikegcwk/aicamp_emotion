@@ -91,6 +91,10 @@ def yolo_forward(net, LABELS, image, confidence_level, save_image=False):
     # boxes
     # idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_level, threshold)
 
+    print(class_ids)
+    print(LABELS)
+    # print(labels)
+
     labels = [LABELS[i] for i in class_ids]
 
     if save_image:
