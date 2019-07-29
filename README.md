@@ -33,23 +33,23 @@ AIEIO is an emotion detector built by high schoolers using [YOLO](https://pjredd
 [linkedin-url5]: https://www.linkedin.com/in/muti-shuman-b574a9158/
 [linkedin-url6]: https://www.linkedin.com/in/thomas-chen-82239918b/
 
-**How to use/explanations of everything**
+## **How to use/explanations of everything**
 
 Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it works.
 
 
-***Everything data***: Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
+### ***Everything data***: Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
 
-  1. **To collect data:**
+  1. #### **To collect data:**
      - **bing_images_api.py** allows you to download images from the Bing Image API. You will need a [Bing API subscription key](https://azure.microsoft.com/en-us/try/cognitive-services/) that goes on line 28. To use the program, first run the function save_url(). Once the urls are saved, then run the function download_list()
      - **open_cv_camera.py** is a script that opens your computer camera to take pictures of different emotions depending on what key you press. Make sure you have OpenCV installed to use this script.
      - We also used a [chrome extension](https://chrome.google.com/webstore/detail/image-downloader/cnpniohnfphhjihaiiggeabnkjhpaldj?hl=en-US) to download images.
   
-  2. **To label data:**
+  2. #### **To label data:**
       - After downloading some 10,000 images from bing and google and taking about 1,000 more with OpenCV, we had to label them. We used a website called **Labelbox** to label all of our web collected images. 
       - For our OpenCV pictures, we ran a [face detector](https://docs.opencv.org/3.4.1/d7/d8b/tutorial_py_face_detection.html) script to put a box around the faces and the images were saved in a folder titled with their corresponding emotions.
 
-  3. **To format data:**
+  3. #### **To format data:**
       
       Then we had to format the labeled data to a format that the YOLO neural network understands. This means we needed a text file with 5 numbers: 
              1. the class ID as in what emotion
@@ -64,14 +64,14 @@ Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it 
       
         - **bnding_box_yolo_format.py** turns the information from Labelbox, as in all of the boxes that you made when you labeled the data, into the five numbers that YOLO understands. If you are not building an emotion detector, make sure you pay attention to the class ID’s on lines 99 to 108. To use the program you first need to export the information from Labelbox as a csv and then when you run the program, keep in mind that it takes three argument variables: the script_name as in bnding_box_yolo_format.py, the path where the csv is stored, and the path of where all of the images are stored. 
 
-   4. **Split data:**
+   4. #### **Split data:**
           Then we had to split our data into train and test data. 
           - **make_path.py** splits the data. We trained our model with 80% of our data. You can change that on line 35. The specific data we used for our tiny YOLO model is under aicamp/yolo_training/clem-tinyv1 and is called clem_train.txt (training data) and clem_valid.txt (test data). For our regular YOLO model look for the same files under aicamp/yolo_training/clemv1. 
 
 
 
 
-***Train model***:
+### ***Train model***:
   
    - Before you train your model, make sure you change your configuration files (.cfg), your .names, and .data files. Follow these two tutorials to train: [training tutorial on medium](https://medium.com/@manivannan_data/how-to-train-yolov3-to-detect-custom-objects-ccbcafeb13d2) & [training tutorial on github (more detailed)](https://github.com/AlexeyAB/darknet).
 
@@ -80,7 +80,7 @@ Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it 
    - The specific files that we used for training five emotions for our tiny YOLO model are listed under aicamp/yolo_training/clem-tinyv1. Look at clem-tiny.data, cletm-yolov3-tiny.cfg, & clem.names. For our regular model look under aicamp/yolo_training/clemv1 and you’ll se we used clem.data, clem.names, and clem-yolov3.cfg. You can also see the graphs of the loss our training produced, which are the two pngs. 
 
 
-***Evaluate model***:
+### ***Evaluate model***:
     
    - Look under aicamp/scripts/model. 
 
@@ -90,5 +90,5 @@ Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it 
    - **yolo_show.py** tests the model realtime
 
 
-Deploy model:
+### ***Deploy model***:
    - will add website stuff once they are done and i push them to github
