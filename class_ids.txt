@@ -6,3 +6,4 @@ fear,3
 disgust,4
 angry,5
 neutral,6
+# not consistent!
