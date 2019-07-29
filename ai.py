@@ -4,7 +4,22 @@ import cv2
 import numpy as np
 
 
-def yolo_forward(net, labels, image, confidence_level, save_image=False):
+def get_yolo_net(cfg_path, weight_path):
+    """
+    return YOLO net.
+    run this function when app starts to load the net.
+    """
+
+    if not cfg_path or not weight_path:
+        raise Exception('missing inputs. See file.')
+
+    # load our YOLO object detector trained on COCO dataset (80 classes)
+    print('[INFO] loading YOLO from disk...')
+    net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
+
+    return net
+
+def yolo_forward(net, LABELS, image, confidence_level, save_image=False):
     """
     forward data through YOLO network
     """
@@ -76,10 +91,10 @@ def yolo_forward(net, labels, image, confidence_level, save_image=False):
     # boxes
     # idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_level, threshold)
 
-    labels = [labels[i] for i in class_ids]
+    labels = [LABELS[i] for i in class_ids]
 
     if save_image:
-        yolo_save_img(image, class_ids, boxes, labels, confidences, colors, 'predictions.jpg')
+        yolo_save_img(image, class_ids, boxes, labels, confidences, colors, 'python_predictions.jpg')
 
     return class_ids, labels, boxes, confidences
 
@@ -124,22 +139,6 @@ def yolo_show_img(image, class_ids, boxes, labels, confidences, colors):
     cv2.waitKey(0)
 
 
-def get_yolo_net(cfg_path, weight_path):
-    """
-    return YOLO net.
-    run this function when app starts to load the net.
-    """
-
-    if not cfg_path or not weight_path:
-        raise Exception('missing inputs. See file.')
-
-    # load our YOLO object detector trained on COCO dataset (80 classes)
-    print('[INFO] loading YOLO from disk...')
-    net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
-
-    return net
-
-
 def yolo_pred(image_path, names_path, cfg_path, weight_path):
     # get the net using cfg and weight
     net = get_yolo_net(cfg_path, weight_path)
@@ -157,6 +156,40 @@ def yolo_pred(image_path, names_path, cfg_path, weight_path):
 
     yolo_show_img(image, class_ids, boxes, labels, confidences, colors)
 
+
+
+def yolo_pred_list(image_folder_path, names_file, cfg_file, weight_file, confidence_level=0.5, threshold=0.3, save_image=False):
+
+    all_paths = os.listdir(image_folder_path)
+    image_paths = [os.path.join(image_folder_path, f) \
+        for f in all_paths if '.jpg' in f or '.png' in f]
+
+    image_paths.sort()
+
+    LABELS = open(names_file).read().strip().split("\n")
+
+    # loading yolo net
+    print("[INFO] loading YOLO from disk...")
+    net = cv2.dnn.readNetFromDarknet(cfg_file, weight_file)
+
+    # make predictions
+    output = []    
+    for image_path in image_paths:
+        print('++++++++++New Prediction+++++++++')
+        print(image_path)
+        image = cv2.imread(image_path)
+        (class_ids, labels, boxes, confidences) = yolo_forward(
+            net, LABELS, image, confidence_level, save_image=save_image)
+        result = {
+            'image_path': image_path,
+            'class_ids': class_ids,
+            'labels': labels,
+            'boxes': boxes,
+            'confidences': confidences
+        }
+        output.append(result)
+    
+    return output
 
 def yolo_video(name_path, cfg_path, weight_path):
     # get the net using cfg and weight

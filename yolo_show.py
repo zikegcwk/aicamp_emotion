@@ -118,8 +118,7 @@ def show_img(image, class_ids, boxes, labels, confidences, COLORS, video_mode=Fa
     else:
         cv2.imshow("yolo prediction", image)
         cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        cv2.waitKey(1)
+
 
 
 def yolo_pred(image_path, names_file, cfg_file, weight_file, confidence_level=0.5, threshold=0.3, show_image=True):
@@ -195,25 +194,18 @@ def yolo_video(names_path, cfg_path, weight_path, confidence_level=0.5, threshol
         
         
 
-def yolo_pred_list(image_folder_path, names_file, cfg_file, weight_file, confidence_level=0.5, threshold=0.3, show_image=True):
+def yolo_pred_list(image_folder_path, names_file, cfg_file, weight_file, confidence_level=0.5, threshold=0.3, show_image=False):
 
     all_paths = os.listdir(image_folder_path)
     image_paths = [os.path.join(image_folder_path, f) for f in all_paths if '.jpg' in f]
 
     image_paths.sort()
 
-    yolo_path = os.getcwd()
-    # load the COCO class labels our YOLO model was trained on
-    labelsPath = os.path.sep.join([yolo_path, "data", names_file])
-    LABELS = open(labelsPath).read().strip().split("\n")
-
-    # derive the paths to the YOLO weights and model configuration
-    weightsPath = os.path.sep.join([yolo_path, weight_file])
-    configPath = os.path.sep.join([yolo_path, 'cfg', cfg_file])
+    LABELS = open(names_file).read().strip().split("\n")
 
     # load our YOLO object detector trained on COCO dataset (80 classes)
     print("[INFO] loading YOLO from disk...")
-    net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
+    net = cv2.dnn.readNetFromDarknet(cfg_file, weight_file)
 
     for image_path in image_paths:
         print('++++++++++New Prediction+++++++++')
