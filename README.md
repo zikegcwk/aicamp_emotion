@@ -38,7 +38,7 @@ AIEIO is an emotion detector built by high schoolers using [YOLO](https://pjredd
 Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it works.
 
 
-Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
+***Everything data***: Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
 
   1. **To collect data:**
      - **bing_images_api.py** allows you to download images from the Bing Image API. You will need a [Bing API subscription key](https://azure.microsoft.com/en-us/try/cognitive-services/) that goes on line 28. To use the program, first run the function save_url(). Once the urls are saved, then run the function download_list()
@@ -50,13 +50,15 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
       - For our OpenCV pictures, we ran a [face detector](https://docs.opencv.org/3.4.1/d7/d8b/tutorial_py_face_detection.html) script to put a box around the faces and the images were saved in a folder titled with their corresponding emotions.
 
   3. **To format data:**
-        Then we had to format the labeled data to a format that the YOLO neural network understands. This means we needed a text file with 5 numbers: 
-                - the class ID as in what emotion
-                - the x coordinate of the center of the box
-                - the y coordinate of the center of the box
-                - the width of the label box
-                - the height of the label box 
-        The last four numbers are proportions over the dimensions of the entire image, as in they are numbers from 0 to 1. 
+      
+      Then we had to format the labeled data to a format that the YOLO neural network understands. This means we needed a text file with 5 numbers: 
+             1. the class ID as in what emotion
+             2. the x coordinate of the center of the box
+             3. the y coordinate of the center of the box
+             4. the width of the label box
+             5. the height of the label box 
+      
+      The last four numbers are proportions over the dimensions of the entire image, as in they are numbers from 0 to 1. 
       
         - **get_labelbox_data.py** allows you to download all of the images you labeled into one folder. We did this to organize our data better because we did not end up labeling all of the images we downloaded.
       
@@ -69,7 +71,7 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
 
 
 
-Train model:
+***Train model***:
   
    - Before you train your model, make sure you change your configuration files (.cfg), your .names, and .data files. Follow these two tutorials to train: [training tutorial on medium](https://medium.com/@manivannan_data/how-to-train-yolov3-to-detect-custom-objects-ccbcafeb13d2) & [training tutorial on github (more detailed)](https://github.com/AlexeyAB/darknet).
 
@@ -78,13 +80,14 @@ Train model:
    - The specific files that we used for training five emotions for our tiny YOLO model are listed under aicamp/yolo_training/clem-tinyv1. Look at clem-tiny.data, cletm-yolov3-tiny.cfg, & clem.names. For our regular model look under aicamp/yolo_training/clemv1 and you’ll se we used clem.data, clem.names, and clem-yolov3.cfg. You can also see the graphs of the loss our training produced, which are the two pngs. 
 
 
-Evaluate model:
+***Evaluate model***:
     
    - Look under aicamp/scripts/model. 
 
    - **model_testing.py** will count how many of each emotion the your model detected. You need to make sure you also have ai.py because in line 4 of model_testing.py, two functions are imported from ai.py. In this program you can customize the confidence level (line 4) which changes the sensitivity of what your model predicts and you will need to customize your specific paths to your test csv and your weights (lines 21 and 22).
 
    - **ai.py** runs all of the images through the YOLO network. Whereas model_testing.py counts the number of images of each emotion by running functions from ai.py, ai.py is actually running the images through the YOLO network with the weights that your model has. 
+   - **yolo_show.py** tests the model realtime
 
 
 Deploy model:
