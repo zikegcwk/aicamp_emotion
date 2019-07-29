@@ -88,7 +88,7 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
    - **model_testing.py** will count how many of each emotion the your model detected. You need to make sure you also have ai.py because in line 4 of model_testing.py, two functions are imported from ai.py. In this program you can customize the confidence level (line 4) which changes the sensitivity of what your model predicts and you will need to customize your specific paths to your test csv and your weights (lines 21 and 22).
 
    - **ai.py** runs all of the images through the YOLO network. Whereas model_testing.py counts the number of images of each emotion by running functions from ai.py, ai.py is actually running the images through the YOLO network with the weights that your model has. 
-   - **yolo_show.py** tests the model realtime
+   - **yolo_show.py** runs the model on images, sets of images, or videos. It prints the emotion the model predicted and how confident the model is that the images shows the particular emotion. 
 
 
 ### ***Deploy model***:
