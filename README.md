@@ -38,7 +38,8 @@ AIEIO is an emotion detector built by high schoolers using [YOLO](https://pjredd
 Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it works.
 
 
-### ***Everything data***: Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
+### ***Everything data***:
+Look under aicamp/scripts/etl, and you’ll find the following scripts that help collect, label, format, and split data.
 
   1. #### **To collect data:**
      - **bing_images_api.py** allows you to download images from the Bing Image API. You will need a [Bing API subscription key](https://azure.microsoft.com/en-us/try/cognitive-services/) that goes on line 28. To use the program, first run the function save_url(). Once the urls are saved, then run the function download_list()
@@ -65,8 +66,8 @@ Install [YOLO](https://pjreddie.com/darknet/yolo/) and get familiar with how it 
         - **bnding_box_yolo_format.py** turns the information from Labelbox, as in all of the boxes that you made when you labeled the data, into the five numbers that YOLO understands. If you are not building an emotion detector, make sure you pay attention to the class ID’s on lines 99 to 108. To use the program you first need to export the information from Labelbox as a csv and then when you run the program, keep in mind that it takes three argument variables: the script_name as in bnding_box_yolo_format.py, the path where the csv is stored, and the path of where all of the images are stored. 
 
    4. #### **Split data:**
-          Then we had to split our data into train and test data. 
-          - **make_path.py** splits the data. We trained our model with 80% of our data. You can change that on line 35. The specific data we used for our tiny YOLO model is under aicamp/yolo_training/clem-tinyv1 and is called clem_train.txt (training data) and clem_valid.txt (test data). For our regular YOLO model look for the same files under aicamp/yolo_training/clemv1. 
+        Then we had to split our data into train and test data. 
+        - **make_path.py** splits the data. We trained our model with 80% of our data. You can change that on line 35. The specific data we used for our tiny YOLO model is under aicamp/yolo_training/clem-tinyv1 and is called clem_train.txt (training data) and clem_valid.txt (test data). For our regular YOLO model look for the same files under aicamp/yolo_training/clemv1. 
 
 
 
