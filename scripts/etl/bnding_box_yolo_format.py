@@ -102,10 +102,10 @@ def get_yolo_formats(emotion_dict, total_width, total_height):
                 class_id = 1
             elif emotion == 'surprised':
                 class_id = 2
-            # elif emotion == 'sad':
-            #     class_id = 3
-            # elif emotion == 'angry':
-            #     class_id = 4
+            elif emotion == 'sad':
+                class_id = 3
+            elif emotion == 'angry':
+                class_id = 4
             else:
                 continue
         
