@@ -11,6 +11,8 @@ from sklearn import svm, datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
+from matplotlib import rcParams
+rcParams.update({'figure.autolayout': True})
 # custom lib
 from ai import yolo_forward, get_yolo_net, yolo_save_img, yolo_pred_list
 np.set_printoptions(precision=2)
@@ -44,6 +46,9 @@ def get_predictions(image_folder_root='data', \
     
     results = []
     for l in LABELS:
+        if l == NO_DETECTION_LABEL:
+            continue
+
         image_folder_path = os.path.join(image_folder_root, l)
         folder_result = yolo_pred_list(
             image_folder_path, 
@@ -127,12 +132,19 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='confusion matrix'
             title = 'Confusion matrix, without normalization'
 
     if normalize:
-        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        total = []
+        for t in cm.sum(axis=1):
+            if t == 0:
+                total.append(10**9)
+            else:
+                total.append(t)
+        total=np.array(total)
+        cm = cm.astype('float') / total[:, np.newaxis]
         print("Normalized confusion matrix")
     else:
         print('Confusion matrix, without normalization')
 
-    fig, ax = plt.subplots(figsize=(5, 5))
+    fig, ax = plt.subplots(figsize=(7, 7))
     im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
     ax.figure.colorbar(im, ax=ax)
     # We want to show all ticks...
@@ -155,9 +167,10 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='confusion matrix'
         for j in range(cm.shape[1]):
             ax.text(j, i, format(cm[i, j], fmt),
                     ha="center", va="center",
-                    color="white" if cm[i, j] < thresh else "black", size=14)
-    # fig.tight_layout()
-    plt.savefig(output_file)
+                    color="white" if cm[i, j] < thresh else "black", size=12)
+    fig.tight_layout()
+    plt.autoscale()
+    plt.savefig(output_file, bbox_inches = "tight")
     return ax
 
 
@@ -186,49 +199,71 @@ def save_pred_image(pred_results):
             )
         )
 
-
-if __name__ == '__main__':
-
-    # set the parameters
-    image_folder_root = '/Users/mkz/Google Drive/ai-camp/project_aieio/test_data'
-    confidence_level = 0.3
-    # # 5 emotion zk data
-    # names_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1.names'
-    # cfg_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3.cfg'
-    # weight_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3_last.weights'
-    # output_file = 'zk-5-emo.pickle'
-
-    # 5 emotion zk data - tiny
-    names_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1.names'
-    cfg_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny.cfg'
-    weight_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny_final.weights'
-    output_file = 'zk-tiny-5-emo'
-    
-    # # 5 emotion clem data
-    # names_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem.names'
-    # cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem-yolov3.cfg'
-    # weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem-yolov3_best.weights'
-    # output_file = 'clem-5-emo.pickle'
-    
-    # # 5 emotion clem data - tiny
-    # names_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem.names'
-    # cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny.cfg'
-    # weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny2_best.weights'
-    # output_file = 'clem-tiny-5-emo.pickle'
-
-    # predictions = get_predictions(
-    #     image_folder_root=image_folder_root,
-    #     names_path=names_path,
-    #     cfg_path=cfg_path,
-    #     weight_path=weight_path,
-    #     confidence_level=confidence_level,
-    #     output_file=output_file
-    # )
+def evaluate_model(image_folder_root, names_path, cfg_path, weight_path, confidence_level, output_file):
+    predictions = get_predictions(
+        image_folder_root=image_folder_root,
+        names_path=names_path,
+        cfg_path=cfg_path,
+        weight_path=weight_path,
+        confidence_level=confidence_level,
+        output_file=output_file + '.pickle'
+    )
     data = clean_scores(os.path.join(image_folder_root, output_file + '.pickle'))
     cm = get_conf_matrix(data)
     plot_confusion_matrix(cm, LABELS, normalize=False, 
         title='confusion matrix',
         cmap=plt.cm.rainbow, 
         output_file=os.path.join(image_folder_root, output_file + '_cm.jpg'))
+    plot_confusion_matrix(cm, LABELS, normalize=True, 
+        title='confusion matrix',
+        cmap=plt.cm.rainbow, 
+        output_file=os.path.join(image_folder_root, output_file + '_ncm.jpg'))
     # save_pred_image(predictions)
 
+
+if __name__ == '__main__':
+
+    # set the parameters
+    image_folder_root = '/Users/mkz/Google Drive/ai-camp/project_aieio/test_data'
+    confidence_level = 0.3
+
+
+    # # 3 emotion zk data
+    names_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk.names'
+    cfg_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny.cfg'
+    weight_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny_best.weights'
+    output_file = 'zk-tiny-3-emo'
+    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+
+    # # 5 emotion zk data
+    names_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1.names'
+    cfg_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3.cfg'
+    weight_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3_last.weights'
+    output_file = 'zk-5-emo'
+    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+
+    # 5 emotion zk data - tiny
+    names_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1.names'
+    cfg_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny.cfg'
+    weight_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny_final.weights'
+    output_file = 'zk-tiny-5-emo'
+    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+
+    # # 5 emotion clem data
+    names_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem.names'
+    cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem-yolov3.cfg'
+    weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem-yolov3_best.weights'
+    output_file = 'clem-5-emo'
+    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+    
+    # # 5 emotion clem data - tiny
+    names_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem.names'
+    cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny.cfg'
+    weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny2_best.weights'
+    output_file = 'clem-tiny-5-emo'
+    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
