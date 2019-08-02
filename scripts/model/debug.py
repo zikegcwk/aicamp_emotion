@@ -218,7 +218,7 @@ def evaluate_model(image_folder_root, names_path, cfg_path, weight_path, confide
         title='confusion matrix',
         cmap=plt.cm.rainbow, 
         output_file=os.path.join(image_folder_root, output_file + '_ncm.jpg'))
-    # save_pred_image(predictions)
+    save_pred_image(predictions)
 
 
 if __name__ == '__main__':
@@ -228,29 +228,29 @@ if __name__ == '__main__':
     confidence_level = 0.3
 
 
-    # # 3 emotion zk data
-    names_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk.names'
-    cfg_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny.cfg'
-    weight_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny_best.weights'
-    output_file = 'zk-tiny-3-emo'
-    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
-         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+    # # # 3 emotion zk data
+    # names_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk.names'
+    # cfg_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny.cfg'
+    # weight_path = '/Users/mkz/code/yolo_results/3_emotions_tiny/zk-yolov3-tiny_best.weights'
+    # output_file = 'zk-tiny-3-emo'
+    # evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+    #      names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
 
-    # # 5 emotion zk data
-    names_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1.names'
-    cfg_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3.cfg'
-    weight_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3_last.weights'
-    output_file = 'zk-5-emo'
-    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
-         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+    # # # 5 emotion zk data
+    # names_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1.names'
+    # cfg_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3.cfg'
+    # weight_path = '/Users/mkz/code/yolo_results/5_emotions/emotion1_yolov3_last.weights'
+    # output_file = 'zk-5-emo'
+    # evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+    #      names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
 
-    # 5 emotion zk data - tiny
-    names_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1.names'
-    cfg_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny.cfg'
-    weight_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny_final.weights'
-    output_file = 'zk-tiny-5-emo'
-    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
-         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+    # # 5 emotion zk data - tiny
+    # names_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1.names'
+    # cfg_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny.cfg'
+    # weight_path = '/Users/mkz/code/yolo_results/5_emotions_tiny/emotion1_yolov3_tiny_final.weights'
+    # output_file = 'zk-tiny-5-emo'
+    # evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+    #      names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
 
     # # 5 emotion clem data
     names_path = '/Users/mkz/code/yolo_results/5_clem_emotions/clem.names'
@@ -260,10 +260,10 @@ if __name__ == '__main__':
     evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
          names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
     
-    # # 5 emotion clem data - tiny
-    names_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem.names'
-    cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny.cfg'
-    weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny2_best.weights'
-    output_file = 'clem-tiny-5-emo'
-    evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
-         names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)
+    # # # 5 emotion clem data - tiny
+    # names_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem.names'
+    # cfg_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny.cfg'
+    # weight_path = '/Users/mkz/code/yolo_results/5_clem_emotions_tiny/clem-yolov3-tiny2_best.weights'
+    # output_file = 'clem-tiny-5-emo'
+    # evaluate_model(image_folder_root=image_folder_root, confidence_level=confidence_level,
+    #      names_path=names_path, cfg_path=cfg_path, weight_path=weight_path, output_file=output_file)

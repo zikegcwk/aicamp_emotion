@@ -115,11 +115,24 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
 
         # draw a bounding box rectangle and label on the image
         color = [int(c) for c in colors[class_ids[i]]]
-        cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+        cv2.rectangle(image, (x, y), (x + w, y + h), color, 3)
         text = '{}: {:.4f}'.format(labels[i], confidences[i])
         print(text)
-        cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
+        font_scale = 1.3
+        # set the rectangle background to white
+        rectangle_bgr = color
+        # set some text
+        # get the width and height of the text box
+        (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale=font_scale, thickness=1)[0]
+        # set the text start position
+        text_offset_x = x
+        text_offset_y = y - 3 
+        # make the coords of the box with a small padding of two pixels
+        box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 10, text_offset_y - text_height - 10    ))
+        cv2.rectangle(image, box_coords[0], box_coords[1], rectangle_bgr, cv2.FILLED)
+        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, 
+            fontScale=font_scale, color=(255, 255, 255), thickness=2)
     cv2.imwrite(file_path, image)
     return image
 
@@ -135,10 +148,24 @@ def yolo_show_img(image, class_ids, boxes, labels, confidences, colors):
 
         # draw a bounding box rectangle and label on the image
         color = [int(c) for c in colors[class_ids[i]]]
-        cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+        cv2.rectangle(image, (x, y), (x + w, y + h), color, 3)
         text = '{}: {:.4f}'.format(labels[i], confidences[i])
         print(text)
-        cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+
+        font_scale = 1.3
+        # set the rectangle background to white
+        rectangle_bgr = color
+        # set some text
+        # get the width and height of the text box
+        (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale=font_scale, thickness=1)[0]
+        # set the text start position
+        text_offset_x = x
+        text_offset_y = y - 3 
+        # make the coords of the box with a small padding of two pixels
+        box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 10, text_offset_y - text_height - 10    ))
+        cv2.rectangle(image, box_coords[0], box_coords[1], rectangle_bgr, cv2.FILLED)
+        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, 
+            fontScale=font_scale, color=(255, 255, 255), thickness=2)
 
     cv2.imshow('yolo prediction', image)
     cv2.waitKey(0)
