@@ -89,6 +89,12 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
 
    - **ai.py** runs all of the images through the YOLO network. Whereas model_testing.py counts the number of images of each emotion by running functions from ai.py, ai.py is actually running the images through the YOLO network with the weights that your model has. 
    - **yolo_show.py** runs the model on images, sets of images, or videos. It prints the emotion the model predicted and how confident the model is that the images shows the particular emotion. 
+   
+   - **results** ![alt text](https://raw.githubusercontent.com/zikegcwk/aicamp/master/yolo_training/clemv1/chartv1.png "Chart Part 1")
+   ![alt text](https://raw.githubusercontent.com/zikegcwk/aicamp/master/yolo_training/clemv1/chartv2.png "Chart Part 2")
+   ![alt text](https://raw.githubusercontent.com/zikegcwk/aicamp/master/yolo_training/clemv1/clem-5-emo_cm.jpg "Confusion Matrix")
+   
+
 
 
 ### ***Deploy model***:
