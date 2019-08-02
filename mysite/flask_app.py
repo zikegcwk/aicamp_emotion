@@ -8,24 +8,26 @@ import numpy as np
 import time
 
 UPLOAD_FOLDER = 'images'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024
 
+# -rw-r--r--   1 mkz  staff   8.1K Jul 29 10:43 clem-yolov3.cfg
+# -rw-r--r--@  1 mkz  staff   235M Jul 29 16:24 clem-yolov3_best.weights
+# -rw-r--r--   1 mkz  staff   119B Jul 25 22:08 clem.data
+# -rw-r--r--   1 mkz  staff    34B Jul 31 15:17 clem.names
+here = os.getcwd()
+names_path = os.path.join(here, 'yolo', 'clem.names')
+LABELS = open(names_path).read().strip().split("\n")
+np.random.seed(42)
+COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
+    dtype="uint8")
 
-# here = os.getcwd()
-# names_path = os.path.join(here, 'hotdog', 'hotdog1.names')
-# # load the COCO class labels our YOLO model was trained on
-# LABELS = open(names_path).read().strip().split("\n")
-# np.random.seed(42)
-# COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
-#     dtype="uint8")
-
-# weights_path = os.path.join(here, 'hotdog', 'hotdog1-yolov3-tiny_last.weights')
-# cfg_path = os.path.join(here, 'hotdog', 'hotdog1-yolov3-tiny.cfg')
-# net = get_yolo_net(cfg_path, weights_path)
+weights_path = os.path.join(here, 'yolo', 'clem-yolov3_best.weights')
+cfg_path = os.path.join(here, 'yolo', 'clem-yolov3.cfg')
+net = get_yolo_net(cfg_path, weights_path)
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -60,19 +62,23 @@ from flask import send_from_directory
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-    # here = os.getcwd()
-    # image_path = os.path.join(here, app.config['UPLOAD_FOLDER'], filename)
-    # image = cv2.imread(image_path)
-    # (class_ids, labels, boxes, confidences) = yolo_forward(net, LABELS, image, confidence_level=0.5, threshold=0.3)
+    here = os.getcwd()
+    image_path = os.path.join(here, app.config['UPLOAD_FOLDER'], filename)
+    image = cv2.imread(image_path)
+    (class_ids, labels, boxes, confidences) = yolo_forward(net, LABELS, image, confidence_level=0.3)
     
-    # if len(class_ids) > 0:
-    #     found = True
-    #     new_filename = 'yolo_' + filename
-    #     file_path = os.path.join(here, app.config['UPLOAD_FOLDER'], new_filename)
-    #     yolo_save_img(image, class_ids, boxes, labels, confidences, COLORS, file_path=file_path)
-    #     return send_from_directory(app.config['UPLOAD_FOLDER'], new_filename)
-    # else:
-    #     found = False
-    #     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    if len(class_ids) > 0:
+        found = True
+        new_filename = 'yolo_' + filename
+        file_path = os.path.join(here, app.config['UPLOAD_FOLDER'], new_filename)
+        yolo_save_img(image, class_ids, boxes, labels, confidences, COLORS, file_path=file_path)
+        return render_template('results.html', confidences = str(round(confidences[0] * 100)) + '%', labels=labels[0], 
+            old_filename = filename, 
+            filename=new_filename) 
+    else:
+        found = False
+        return render_template('results.html', labels='no emotion', old_filename = filename, filename=filename)
 
+@app.route('/files/<path:filename>')
+def files(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)

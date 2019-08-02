@@ -116,7 +116,8 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
         # draw a bounding box rectangle and label on the image
         color = [int(c) for c in colors[class_ids[i]]]
         cv2.rectangle(image, (x, y), (x + w, y + h), color, 3)
-        text = '{}: {:.4f}'.format(labels[i], confidences[i])
+        text = '{}'.format(labels[i])
+        # text = '{}: {:.4f}'.format(labels[i], confidences[i])
         print(text)
 
         font_scale = 1.3
