@@ -8,8 +8,8 @@
     <link rel="shortcut icon" href="/static/images/ai-camp-logo-128x128.png" type="image/x-icon">
     <meta name="description" content="">
 
-    <title>trueindex</title>
-    <link rel="stylesheet" href="/static/web//static/mobirise-icons/mobirise-icons.css">
+    <title>Emotion Detector by AI Camp</title>
+    <link rel="stylesheet" href="/static/web/assets/mobirise-icons/mobirise-icons.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700&subset=latin,vietnamese,latin-ext">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&subset=latin,cyrillic">
     <link rel="stylesheet" href="/static/tether/tether.min.css">
@@ -18,10 +18,33 @@
     <link rel="stylesheet" href="/static/mobirise/css/mbr-additional.css" type="text/css">
 
 
+    <style>
+        .spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -50px;
+            /* half width of the spinner gif */
+            margin-top: -50px;
+            /* half height of the spinner gif */
+            text-align: center;
+            z-index: 1234;
+            overflow: auto;
+            width: 100px;
+            /* width of the spinner gif
+        */
+            height: 102px;
+            /*hight of the spinner gif +2px to fix IE8 issue */
+        }
+    </style>
+
 
 </head>
 
 <body>
+    <div id="spinner" class="spinner" style="display:none;">
+        <img id="img-spinner" src="/static/images/spinner.gif" alt="Loading" />
+    </div>
     <nav class="navbar navbar-light mbr-navbar" id="ext_menu-4" data-rv-view="11" style="background-color: rgb(242, 242, 242);">
         <div class="container">
             <button class="navbar-toggler pull-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
@@ -30,8 +53,8 @@
 
             <div class="clearfix"></div>
             <div class="collapse navbar-toggleable-sm" id="exCollapsingNavbar2">
-                <span class="navbar-logo"><a href="https://www.ai-camp.org"><img src="/static/images/ai-camp-logo-128x128.png" alt="Mobirise"></a></span>
-                <span><a class="navbar-brand text-black" href="https://www.ai-camp.org">Emotion Detector by AI Camp</a></span>
+                <span class="navbar-logo"><a href="https://www.ai-camp.org"><img src="/static/images/ai-camp-logo-128x128.png" alt="AI Camp"></a></span>
+                <span><a class="navbar-brand" href="/">Emotion Detector by AI Camp</a></span>
 
                 <ul class="nav navbar-nav pull-xs-right">
                     <li class="nav-item"><a class="btn btn-success-outline btn-success" href="http://www.ai-camp.org">Join AI Camp</a></li>
@@ -52,15 +75,16 @@
                     <div class="col-md-8 col-md-offset-4 text-xs-right">
 
                         <h1 class="mbr-section-title display-1">A.I. that recognizes your emotion</h1>
-                        <p class="lead">Crafted by a group of high school students from <span><a href="https://www.ai-camp.org">AI Camp</a></span></p>
+                        <p class="lead">Crafted by a group of high school students from <span class='text-blod'><a class='text-black' href="https://www.ai-camp.org">AI Camp</a></span></p>
                         <div class="mbr-buttons--left">
                             <div class="mbr-section-btn">
                                 <a class="btn btn-lg btn-success display-5" href='#' id='seefood_button'>
-                                    <form method=post enctype=multipart/form-data>
+                                    <form id='seefood_form' method=post enctype=multipart/form-data>
                                         <input id="seefood_input_field" name="file" type="file" onchange="this.form.submit();" hidden/>
                                     </form>
                                     <span class="mbri-camera mbr-iconfont mbr-iconfont-btn" style="font-size: 40px;"></span>Touch to see emotion
                                 </a>
+
                             </div>
                         </div>
                     </div>
@@ -123,7 +147,12 @@
                         <h2 class="mbr-section-title h1">Learn how we made this in three weeks with zero coding experience.</h2>
 
                     </div>
-                    <div class="col-sm-4 text-xs-right"><a class="btn btn-lg btn-secondary-outline" href="https://mobirise.com">Read Thomas' blog</a> <a class="btn btn-lg btn-secondary-outline" href="https://mobirise.com">Read Beatrice's blog</a></div>
+                    <div class="col-sm-2 text-xs-left">
+                        <a target="_blank" class="btn btn-md btn-secondary-outline" href="https://www.ai-camp.org">Read Thomas' blog</a>
+                    </div>
+                    <div class="col-sm-2 text-xs-right">
+                        <a target="_blank" class="btn btn-md btn-secondary-outline" href="https://medium.com/@beatrice.miha/i-learned-how-to-learn-dive-into-the-deepest-ocean-3add9449eb7e?sk=cbba7190acc5b9452a57c714545bef9c">Read Beatrice's blog</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,7 +170,7 @@
                             <p class="card-text">
                                 Student at Los Gatos High School. She loves how fast we learned things at AI Camp and contributed to our data extraction and frontend.
                             </p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/beatrice-mihalache-2bb39a18b/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -151,7 +180,7 @@
                         <div class="card-block">
                             <h4 class="card-title text-xs-center">Aryansh Chikkere</h4>
                             <p class="card-text">Student at American High School. Ari wants to study Physics and built the initial backend of the site.</p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/aryansh-chikkere-36b39918b/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -161,7 +190,7 @@
                         <div class="card-block">
                             <h4 class="card-title text-xs-center">Clement Ou</h4>
                             <p class="card-text">Student at Henry M. Gunn High School. Clement is perhaps the most quoted student at AI Camp. He trained our models by using a deep learning instance at AWS.</p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/clement-ou-193a2a149/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -171,7 +200,7 @@
                         <div class="card-block">
                             <h4 class="card-title text-xs-center">Muti Shuman</h4>
                             <p class="card-text">Student at Junipero Serra High School. Muti is our 7-foot coder. He built scripts to capture data using OpenCV and prepared our data for training.</p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/muti-shuman-b574a9158/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -189,7 +218,7 @@
                         <div class="card-block">
                             <h4 class="card-title text-xs-center">Thomas Chen</h4>
                             <p class="card-text">Student at Mission High School. Thomas was surprised that we actually learned AI in three weeks! He built the initial script for us to get data from search engines and the frontend.</p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/thomas-chen-82239918b/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +230,7 @@
                                 Dr. Ying Jiang
                             </h4>
                             <p class="card-text">Ying is one of our instructors. She is a Lead Data Scientist at Ericsson. She's passionate about education and learning. She graduated from Cornell with a BS and Stanford with a Ph.D. in Chemical Engineering.</p>
-                            <div class="text-xs-center"><a href="https://mobirise.com" class="btn btn-secondary-outline">More</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/azzurraying/" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -212,7 +241,7 @@
                             <h4 class="card-title text-xs-center">Dr. Michael Ke Zhang</h4>
                             <p class="card-text">Michael is one of our instructors. Previously he ran data teams at Blend Labs and Grab. He's also a founder and EIR at Fusion Fund. He enjoys teaching and inspiring the next generation of students. He graduated from Caltech
                                 with a BS and Stanford with a Ph.D. in Applied Physics.</p>
-                            <div class="text-xs-center"><a href="https://www.linkedin.com/in/michaelkezhang" class="btn btn-secondary-outline">Linkedin</a></div>
+                            <div class="text-xs-center"><a target="_blank" href="https://www.linkedin.com/in/michaelkezhang" class="btn btn-secondary-outline">Linkedin</a></div>
                         </div>
                     </div>
                 </div>
@@ -239,7 +268,7 @@
     </section>
 
 
-    <script src="/static/web//static/jquery/jquery.min.js"></script>
+    <script src="/static/web/assets/jquery/jquery.min.js"></script>
     <script src="/static/tether/tether.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/jarallax/jarallax.js"></script>
@@ -255,6 +284,27 @@
         function openDialog() {
             document.getElementById('seefood_input_field').click();
         }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#spinner").bind("ajaxSend", function() {
+                $(this).show();
+            }).bind("ajaxStop", function() {
+                $(this).hide();
+            }).bind("ajaxError", function() {
+                $(this).hide();
+            });
+            // seefood_input_field
+            $('#seefood_button').click(function() {
+
+            });
+
+            // $("#seefood_form").focus(function() {
+            //     $('#spinner').show();
+            // });
+
+
+        });
     </script>
 
 </body>
