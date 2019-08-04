@@ -5,19 +5,14 @@ import os
 from ai import get_yolo_net, yolo_forward, yolo_save_img
 import cv2
 import numpy as np
-import time
 
 UPLOAD_FOLDER = 'images'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024
 
-# -rw-r--r--   1 mkz  staff   8.1K Jul 29 10:43 clem-yolov3.cfg
-# -rw-r--r--@  1 mkz  staff   235M Jul 29 16:24 clem-yolov3_best.weights
-# -rw-r--r--   1 mkz  staff   119B Jul 25 22:08 clem.data
-# -rw-r--r--   1 mkz  staff    34B Jul 31 15:17 clem.names
 here = os.getcwd()
 names_path = os.path.join(here, 'yolo', 'clem.names')
 LABELS = open(names_path).read().strip().split("\n")
