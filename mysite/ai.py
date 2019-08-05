@@ -14,7 +14,6 @@ def get_yolo_net(cfg_path, weight_path):
     if not cfg_path or not weight_path:
         raise Exception('missing inputs. See file.')
 
-    # load our YOLO object detector trained on COCO dataset (80 classes)
     print('[INFO] loading YOLO from disk...')
     net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
 
