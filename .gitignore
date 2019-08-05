@@ -110,6 +110,7 @@ venv.bak/
 /AIEIOCamera/*
 /.idea/*
 /images/*
+/mysite/images/*
 /labelimg/*
 yolo_training/clemv1/backup/
 yolo_training/chart\.png
