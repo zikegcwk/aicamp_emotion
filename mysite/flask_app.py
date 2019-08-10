@@ -67,7 +67,30 @@ def uploaded_file(filename):
         new_filename = 'yolo_' + filename
         file_path = os.path.join(here, app.config['UPLOAD_FOLDER'], new_filename)
         yolo_save_img(image, class_ids, boxes, labels, confidences, COLORS, file_path=file_path)
-        return render_template('results.html', confidences = str(round(confidences[0] * 100)) + '%', labels=labels[0], 
+        #function to add correct and or comma
+        def and_syntax(alist):
+            if len(alist) == 1:
+                alist = "".join(alist)
+                return alist
+            elif len(alist) == 2:
+                alist = " and ".join(alist)
+                return alist
+            elif len(alist) > 2:
+                alist[-1] = "and " + alist[-1]
+                alist = ", ".join(alist)
+                return alist
+            else:
+                return
+        #confidences: rounding and changing to percent, putting in function
+        format_confidences = []
+        for percent in confidences:
+            format_confidences.append(str(round(percent*100)) + '%')
+        format_confidences = and_syntax(format_confidences)
+        #labels: sorting and capitalizing, putting into function
+        labels = set(labels)
+        labels = [emotion.capitalize() for emotion in labels]
+        labels = and_syntax(labels)
+        return render_template('results.html', confidences = format_confidences, labels=labels, 
             old_filename = filename, 
             filename=new_filename) 
     else:
