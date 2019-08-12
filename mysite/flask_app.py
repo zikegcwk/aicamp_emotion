@@ -95,7 +95,7 @@ def uploaded_file(filename):
             filename=new_filename) 
     else:
         found = False
-        return render_template('results.html', labels='no emotion', old_filename = filename, filename=filename)
+        return render_template('results.html', labels='No Emotion', old_filename = filename, filename=filename)
 
 @app.route('/files/<path:filename>')
 def files(filename):
