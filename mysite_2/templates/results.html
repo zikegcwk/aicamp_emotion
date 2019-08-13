@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/static/assets/aicamp.ico">
+        <title>Results</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="/static/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+        <script src="/static/assets/js/1351.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css" media="screen,projection"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:700,500">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+13px">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px:400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400">
+    </head>
+    <body>
+        <nav class="fixed-top navbar navbar-dark bg-dark navbar-expand-lg">
+            <a class="navbar-brand" href="/"> <table style="overflow: hidden; margin-top: -;">
+                    <tbody class="">
+                        <tr class="border-0">
+                            <td style="overflow: hidden; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;" class="pb-null pr-null pt-null pl-null td-navbar p-null">
+                                <img class="navbar-icon hide-on-small-only" src="/static/assets/ai%20camp%20logo1.svg" width="60" height="60">
+                            </td>
+                            <td class="align-middle hide-on-small-only" style="overflow: hidden; border-top: - solid; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; padding-left: 10px; font-size: 26px; font-family: Futura Lt; font-weight: 200;">Emotion Detector</td>
+                            <td class="align-middle hide-on-med-and-up" style="overflow: hidden; border-top: - solid; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; padding-left: 10px; font-size: 26px; font-family: Futura Lt; font-weight: 200;">Emotion D.</td>
+                        </tr>
+                    </tbody>
+                </table> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-0 ml-auto">
+                    <li class="nav-item dropdown blue-grey darken-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Links&nbsp;</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item aicamp-link" onclick=" window.open('https://www.ai-camp.org/','_blank')">Join AI Camp</a>
+                            <a class="dropdown-item" onclick=" window.open('https://github.com/zikegcwk/aicamp','_blank')">Github Repo</a>
+                            <a class="dropdown-item" onclick=" window.open('https://medium.com/@beatrice.miha/i-learned-how-to-learn-dive-into-the-deepest-ocean-3add9449eb7e','_blank')">Beatrice's Post</a>
+                            <a class="dropdown-item" onclick=" window.open('https://medium.com/@thomaschen395/how-ai-camp-prepared-me-for-the-real-world-7f2a8c28cde5?sk=ab16ad5b6112089484a6302b56733533','_blank')">Thomas's Post</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" >Home <span class="sr-only">(current)</span></a>
+                        <!--change this link for redirect to home-->
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link disabled" href="#section-results" tabindex="-1" aria-disabled="true">Results</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="section-results" id="section-results">
+            <div class="container-2">
+                <div class="row justify-content-center section-divider">
+                    <i class="fal fa-horizontal-rule fa-5x section-divider" aria-hidden="true"></i>
+                </div>
+                <h2 class="center-align">Recognition Results</h2>
+            </div>
+            <ul class="flex-container">
+                <li class="flex-results flex-resultsimg" style="background-image: url('{{ url_for('files', filename=filename) }}');">
+</li>
+                <li class="flex-results flex-resultstxt">
+                    <div class="info-div">
+                        <table style="width: auto;">
+                            <tbody>
+                                <tr>
+                                    <td class="border-0 float-left"><i class="fal fa-horizontal-rule results-dividerpost" aria-hidden="true"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-0 float-left">
+                                        <div class="results-text">We detected
+                                            <span class="results-emotionvariable">{{labels}}!</span>&nbsp;
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% if labels == 'No Emotion' %}
+                                <tr>
+                                    <td class="border-0"> <p class="results-confidencevariable">made a mistake? see why below!</p> </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td class="border-0"> <p class="results-confidencevariable">with <span>{{ confidences }}</span> confidence (from left to right).</p> </td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td class="border-0">
+                                        <button class="h-auto align-middle emotion-button w-auto btn waves-effect waves-light" type="button" id="image_button">
+                                            <form method="post" enctype="multipart/form-data" action="/" >
+                                                <input id="image_input_button" name="file" type="file" onchange="this.form.submit();" /hidden>
+                                            </form>
+                                            <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-2 pl-0 w-auto h-auto">
+                                                <tbody class="w-auto h-auto">
+                                                    <tr class="border-0 w-auto h-auto">
+                                                        <td style="overflow: hidden;" class="w-auto h-auto emotion-icon"> <i class="fas fa-camera fa-2x"></i> </td>
+                                                        <td class="align-middle emotion-text pl-4">Click to See Emotion</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div id="uploadedprogress">
+                                                <div class="progress" style="height: auto;">
+                                                    <div class="progress-bar" id= "progressbar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                </div>
+                                                <div class="progress-text float-left" id="progresstext">0 bytes out of 0 bytes</div>
+                                            </div>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li class="flex-results flex-matriximg">
+</li>
+                <li class="flex-results flex-matrixtxt">
+                    <div class="info-div">
+                        <table style="width: auto;">
+                            <tr>
+                                <td colspan="2" class="border-0"> <i class="fal fa-horizontal-rule results-dividerpost" aria-hidden="true"></i> </td>
+                            </tr>
+                            <tr>
+                                <td valign="middle"><i class="fal fa-exclamation-circle float-left" style="font-size: 70px; margin-right: 20px;" aria-hidden="true"></i></td>
+                                <td valign="middle">
+                                    <h4 class="matrix-h">Didn't work? See why.</h4>
+                                    <!-- <i class="fab fa-medium fa-5x" aria-hidden="true"></i> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-0"> <p class="matrix-p flow-text">Since we only had three weeks for this project, we trained 5 emotions on only 6,700 labeled images. With more images and time, we would have better data and training, which would improve the results!</p> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+            <div class="results-container"></div>
+        </section>
+        <div class="section section-aicamp">
+            <div class="container-3">
+                <p class="ai-header">Learn AI in three weeks with zero coding experience.</p>
+                <p class="ai-info">AI Camp teaches middle and high school students machine learning and career frameworks through real life experience. Prepare for your major and career by joining us!</p>
+                <div class="h-auto">
+                    <div class="aicamp-text">
+                        <button type="button" onclick=" window.open('https://www.ai-camp.org/','_blank')" class="text-capitalize github-button waves-effect waves-light link-button btn-flat work-button btn-outline-info">Join AI Camp</button>
+                        <table class="aicamp-text">
+                            <tbody class="aicamp-text">
+                                <tr>
+                                    <td class="border-0 text-right aicamp-logo">
+                                        <img src="/static/assets/ai%20camp%20logo.svg" class="rounded" width="70">
+                                    </td>
+                                    <td class="border-0 pl-3 aicamp-text"> <h4 class="aicamp-text">AI Camp</h4> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/init.js"></script>
+        <script src="/static/assets/js/popper.js"></script>
+        <script src="/static/assets/js/progressbar.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    </body>
+</html>

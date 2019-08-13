@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Determines if/what emotions exist in an image.">
+        <meta name="author" content="">
+        <link rel="icon" href="/static/assets/aicamp.ico">
+        <title>Emotion Detector</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="/static/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+        <script src="/static/assets/js/1351.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css" media="screen,projection"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:700,500">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+13px">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px:400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400">
+    </head>
+    <body>
+        <nav class="fixed-top navbar navbar-dark bg-dark navbar-expand-lg">
+            <a class="navbar-brand" href="/"> <table style="overflow: hidden; margin-top: -;">
+                    <tbody class="">
+                        <tr class="border-0">
+                            <td style="overflow: hidden; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;" class="pb-null pr-null pt-null pl-null td-navbar p-null">
+                                <img class="navbar-icon hide-on-small-only" src="/static/assets/ai%20camp%20logo1.svg" width="60" height="60">
+                            </td>
+                            <td class="align-middle hide-on-small-only" style="overflow: hidden; border-top: - solid; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; padding-left: 10px; font-size: 26px; font-family: Futura Lt; font-weight: 200;">Emotion Detector</td>
+                            <td class="align-middle hide-on-med-and-up" style="overflow: hidden; border-top: - solid; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; padding-left: 10px; font-size: 26px; font-family: Futura Lt; font-weight: 200;">Emotion D.</td>
+                        </tr>
+                    </tbody>
+                </table> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-0 ml-auto">
+                    <li class="nav-item dropdown blue-grey darken-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Links&nbsp;</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item aicamp-link" onclick=" window.open('https://www.ai-camp.org/','_blank')">Join AI Camp</a>
+                            <a class="dropdown-item" onclick=" window.open('https://github.com/zikegcwk/aicamp','_blank')">Github Repo</a>
+                            <a class="dropdown-item" onclick=" window.open('https://medium.com/@beatrice.miha/i-learned-how-to-learn-dive-into-the-deepest-ocean-3add9449eb7e','_blank')">Beatrice's Post</a>
+                            <a class="dropdown-item" onclick=" window.open('https://medium.com/@thomaschen395/how-ai-camp-prepared-me-for-the-real-world-7f2a8c28cde5?sk=ab16ad5b6112089484a6302b56733533','_blank')">Thomas's Post</a>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="#section-welcome" class="nav-link">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#section-demo">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#section-team">The Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#section-info">Learn More</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="section section-welcome" id="section-welcome">
+            <div class="header-overlay"></div>
+            <div class="pg-empty-placeholder background-image"></div>
+            <div class="container video mh-100 min-vw-100 active">
+</div>
+            <header class="container-title v-header">
+                <div class="w-100 header-content">
+                    <h1 class="text-right">AI Emotion Recognition</h1>
+                    <div class="text-md-center w-auto header-content">
+                        <p class="text-right mt-3 float-none">Created with love from AI Camp @ Stanford StartX. <br>An AI project made by high school students. <br></p>
+
+                        <button class="h-auto align-middle emotion-button w-auto btn waves-effect waves-light" type="button" id="image_button">
+                            <form method="post" enctype="multipart/form-data">
+                                <input id="image_input_button" name="file" accept="image/png, image/jpeg" type="file" onchange="this.form.submit();" /hidden>
+                            </form>
+                            <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-2 pl-0 w-auto h-auto">
+                                <tbody class="w-auto h-auto">
+                                    <tr class="border-0 w-auto h-auto">
+                                        <td style="overflow: hidden;" class="w-auto h-auto emotion-icon"> <i class="fas fa-camera fa-2x"></i> </td>
+                                        <td class="align-middle emotion-text pl-4">Click to See Emotion</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="uploadedprogress">
+                                <div class="progress" style="height: auto;">
+                                    <div class="progress-bar" id= "progressbar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                                <div class="progress-text float-left" id="progresstext">0 bytes out of 0 bytes</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </section>
+        <ul class="flex-container2">
+            <li class="imagelist">
+                <div class="pg-empty-placeholder imagebar" style="background-image: url('/static/assets/happy-450x450-450x450.png');"></div>
+            </li>
+            <li class="imagelist">
+                <div class="pg-empty-placeholder imagebar" style="background-image: url('/static/assets/neutral-450x450-450x450.png');"></div>
+            </li>
+            <li class="imagelist">
+                <div class="pg-empty-placeholder imagebar" style="background-image: url('/static/assets/sad-450x450-450x450.png');"></div>
+            </li>
+            <li class="imagelist">
+                <div class="pg-empty-placeholder imagebar" style="background-image: url('/static/assets/surprised-1-450x450-450x450.png');"></div>
+            </li>
+        </ul>
+        <section class="section section-demo" id="section-demo">
+            <div class="container min-vw-100">
+                <div class="row justify-content-center section-divider">
+                    <i class="fal fa-horizontal-rule fa-5x section-divider"></i>
+                </div>
+                <h2 class="text-center">Watch Our Demo</h2>
+            </div>
+            <div class="youtube-video">
+                <iframe src="https://www.youtube.com/embed/xZYPPYvJsv4?modestbranding=1&controls=1&showinfo=0&rel=0&enablejsapi=1&version=3&mute=0&loop=0&playerapiid=iframe_YTP_1564558236662&origin=*&wmode=transparent&iv_load_policy=3&html5=1&widgetid=1&playlist=xZYPPYvJsv4" class="youtube-video-iframe"></iframe>
+            </div>
+            <p class="video-info">This is an initial prototype of our detection model where we only tested two emotions: happy and neutral. Since then, our model can predict happy, neutral, surprised, and angry very well!&nbsp;</p>
+        </section>
+        <section class="section section-team" id="section-team">
+            <div class="container min-vw-100">
+                <div class="row justify-content-center section-divider">
+                    <i class="fal fa-horizontal-rule fa-5x section-divider"></i>
+                </div>
+                <h2 class="text-center">Meet the Team</h2>
+                <div class="wrapper h-auto">
+                    <div class="card large beatrice z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/beatrice.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Beatrice Mihalache</h5>
+                            <p class="card-text card-p">Student at Los Gatos High School <br>&nbsp;Beatrice enjoys the quick-paced learning style of AI Camp. She contributed to our data extraction and website frontend. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i> PUSH!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/beatrice-mihalache-2bb39a18b/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large ary z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/ary.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Aryansh Chikkere</h5>
+                            <p class="card-text card-p">Student at American High School <br>Ari enjoys studying Physics and improving code. He built the initial backend of this website. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>Let it be as it should!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/aryansh-chikkere-36b39918b/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large thomas z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/thomas.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Thomas Chen</h5>
+                            <p class="card-text card-p">Student at Irvington High School <br>Thomas enjoys experimenting with code. He created a script to retrieve data from Bing and wrote the website HTML. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>Screw it!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/thomas-chen-82239918b/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large clement z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/clement.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Clement Ou</h5>
+                            <p class="card-text card-p">Student at Gunn High School <br>Clement enjoys writing scripts and coding. He trained a neural network by using a deep learning instance in AWS. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>ETL!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/clement-ou-193a2a149/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large muti z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/muti.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Muti Shuman</h5>
+                            <p class="card-text card-p">Student at Junipero Serra High School <br>Muti enjoys playing basketball. He built scripts to capture data using OpenCV and prepared data for training. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>Seven foot coder!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/muti-shuman-b574a9158/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large michael z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/michael.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Michael Zhang</h5>
+                            <p class="card-text card-p">Instructor <br>Michael ran data teams at Blend Labs and Grab. He enjoys fishing and inspiring the next generation of students.</p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>Let's build a fish detector!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/michaelkezhang/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card large ying z-depth-3 hover-pop">
+                        <div class="card-body text-black-50">
+                            <img src="/static/assets/ying.jpg" width="300" height="300" class="float-none responsive-img border-dark image-border rounded-lg">
+                            <h5 class="card-title">Ying Jiang</h5>
+                            <p class="card-text card-p">Instructor <br>Ying is a Lead Data Scientist at Ericsson. She is passionate in education, data analysis, and continuous learning. <br> </p>
+                            <p class="quote-text"><i class="fas fa-quote-left quote-icon mr-1"></i>Confusion matrix is not confusing!"</p>
+                            <button type="button" onclick=" window.open('https://www.linkedin.com/in/azzurraying/','_blank')" class="align-middle h-auto btn-sm btn float-none">
+                                <table style="overflow: hidden; margin-top: 5px; margin-bottom: 5px;" class="m-0">
+                                    <tbody class="">
+                                        <tr class="border-0">
+                                            <td style="overflow: hidden;" class="no-padding"> <i class="fa-linkedin-in fab linkedin-icon align-middle fa-lg"></i> </td>
+                                            <td class="align-middle no-padding pl-3 font-weight-bold text-capitalize">LinkedIn</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-info" id="section-info">
+            <div class="container-2">
+                <div class="row justify-content-center section-divider">
+                    <i class="fal fa-horizontal-rule fa-5x section-divider" aria-hidden="true"></i>
+                </div>
+                <h2 class="center-align">Our Work</h2>
+            </div>
+            <ul class="flex-container">
+                <li class="flex-item mediumbutton">
+                    <div class="w-100 flex-div">
+                        <button type="button" onclick=" window.open('https://medium.com/@beatrice.miha/i-learned-how-to-learn-dive-into-the-deepest-ocean-3add9449eb7e','_blank')" class="text-capitalize waves-effect waves-light btn-outline-success work-button btn-flat w-auto">Read Beatrice's Post</button>
+                        <button type="button" onclick=" window.open('https://medium.com/@thomaschen395/how-ai-camp-prepared-me-for-the-real-world-7f2a8c28cde5?sk=ab16ad5b6112089484a6302b56733533','_blank')" class="text-capitalize waves-effect waves-light btn-outline-success work-button btn-flat w-auto">Read Thomas's Post</button>
+                    </div>
+                </li>
+                <li class="flex-item mediuminfo">
+                    <div class="info-div">
+                        <table style="width: auto;">
+                            <tr>
+                                <td class="border-0"><i class="fal fa-horizontal-rule divider-post"></i> </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 float-left">
+                                    <svg class="svg-inline--fa fa-medium fa-w-14 fa-5x" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="medium" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512" data-fa-i2svg="">
+                                        <path fill="currentColor" d="M0 32v448h448V32H0zm372.2 106.1l-24 23c-2.1 1.6-3.1 4.2-2.7 6.7v169.3c-.4 2.6.6 5.2 2.7 6.7l23.5 23v5.1h-118V367l24.3-23.6c2.4-2.4 2.4-3.1 2.4-6.7V199.8l-67.6 171.6h-9.1L125 199.8v115c-.7 4.8 1 9.7 4.4 13.2l31.6 38.3v5.1H71.2v-5.1l31.6-38.3c3.4-3.5 4.9-8.4 4.1-13.2v-133c.4-3.7-1-7.3-3.8-9.8L75 138.1V133h87.3l67.4 148L289 133.1h83.2v5z"></path>
+                                    </svg>
+                                    <!-- <i class="fab fa-medium fa-5x" aria-hidden="true"></i> -->
+                                </td>
+                                <td class="border-0 float-left"> <h4 class="medium-text">Medium</h4> </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"> <p class="info2-header">Want to read more about what we did?</p> <p class="info2-p">Learn about two students's experience at AI Camp, from the beginning to the end!</p> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li class="flex-item githubbutton">
+                    <button type="button" onclick=" window.open('https://github.com/zikegcwk/aicamp','_blank')" class="text-capitalize waves-effect waves-light btn-outline-success btn-flat work-button">AI Camp Repository</button>
+                </li>
+                <li class="flex-item githubinfo">
+                    <div class="info-div">
+                        <table style="width: auto;">
+                            <tr>
+                                <td class="border-0"><i class="fal fa-horizontal-rule divider-post"></i> </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0 float-left">
+                                    <svg class="svg-inline--fa fa-github fa-w-16 fa-5x" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 496 512" data-fa-i2svg="">
+                                        <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+                                    </svg>
+                                    <!-- <i class="fab fa-github fa-5x" aria-hidden="true"></i> -->
+                                </td>
+                                <td class="border-0 float-left"> <h4 class="github-text">GitHub</h4> </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"> <p class="info2-header">Want to see the building process of our project?</p> <p class="info2-p">Explore the inner workings of our project, from capturing data scripts to YOLO training!</p> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <div class="section section-aicamp">
+            <div class="container-3">
+                <p class="ai-header">Learn AI in three weeks with zero coding experience.</p>
+                <p class="ai-info">AI Camp teaches middle and high school students machine learning and career frameworks through real life experience. Prepare for your major and career by joining us!</p>
+                <div class="h-auto">
+                    <div class="aicamp-text">
+                        <button type="button" onclick=" window.open('https://www.ai-camp.org/','_blank')" class="text-capitalize github-button waves-effect waves-light link-button btn-flat work-button btn-outline-info">Join AI Camp</button>
+                        <table class="aicamp-text">
+                            <tbody class="aicamp-text">
+                                <tr>
+                                    <td class="border-0 text-right aicamp-logo">
+                                        <img src="/static/assets/ai%20camp%20logo.svg" class="rounded" width="70">
+                                    </td>
+                                    <td class="border-0 pl-3 aicamp-text"> <h4 class="aicamp-text">AI Camp</h4> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/navbar.js"></script>
+        <script src="/static/assets/js/popper.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/assets/js/progressbar.js"></script>
+        <script src="/static/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+        
+    </body>
+</html>
