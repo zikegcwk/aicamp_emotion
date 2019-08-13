@@ -14,6 +14,7 @@ def get_yolo_net(cfg_path, weight_path):
     if not cfg_path or not weight_path:
         raise Exception('missing inputs. See file.')
 
+    # load our YOLO object detector trained on COCO dataset (80 classes)
     print('[INFO] loading YOLO from disk...')
     net = cv2.dnn.readNetFromDarknet(cfg_path, weight_path)
 
@@ -115,8 +116,7 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
         # draw a bounding box rectangle and label on the image
         color = [int(c) for c in colors[class_ids[i]]]
         cv2.rectangle(image, (x, y), (x + w, y + h), color, 3)
-        text = '{}'.format(labels[i])
-        # text = '{}: {:.4f}'.format(labels[i], confidences[i])
+        text = '{}: {:.4f}'.format(labels[i], confidences[i])
         print(text)
 
         font_scale = 1.3
@@ -127,11 +127,11 @@ def yolo_save_img(image, class_ids, boxes, labels, confidences, colors, file_pat
         (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale=font_scale, thickness=1)[0]
         # set the text start position
         text_offset_x = x
-        text_offset_y = y - 3 
+        text_offset_y = y - 3
         # make the coords of the box with a small padding of two pixels
         box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 10, text_offset_y - text_height - 10    ))
         cv2.rectangle(image, box_coords[0], box_coords[1], rectangle_bgr, cv2.FILLED)
-        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, 
+        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX,
             fontScale=font_scale, color=(255, 255, 255), thickness=2)
     cv2.imwrite(file_path, image)
     return image
@@ -160,11 +160,11 @@ def yolo_show_img(image, class_ids, boxes, labels, confidences, colors):
         (text_width, text_height) = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, fontScale=font_scale, thickness=1)[0]
         # set the text start position
         text_offset_x = x
-        text_offset_y = y - 3 
+        text_offset_y = y - 3
         # make the coords of the box with a small padding of two pixels
         box_coords = ((text_offset_x, text_offset_y), (text_offset_x + text_width + 10, text_offset_y - text_height - 10    ))
         cv2.rectangle(image, box_coords[0], box_coords[1], rectangle_bgr, cv2.FILLED)
-        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX, 
+        cv2.putText(image, text, (text_offset_x, text_offset_y), cv2.FONT_HERSHEY_SIMPLEX,
             fontScale=font_scale, color=(255, 255, 255), thickness=2)
 
     cv2.imshow('yolo prediction', image)
@@ -205,7 +205,7 @@ def yolo_pred_list(image_folder_path, names_file, cfg_file, weight_file, confide
     net = cv2.dnn.readNetFromDarknet(cfg_file, weight_file)
 
     # make predictions
-    output = []    
+    output = []
     for image_path in image_paths:
         print('++++++++++New Prediction+++++++++')
         print(image_path)
@@ -220,7 +220,7 @@ def yolo_pred_list(image_folder_path, names_file, cfg_file, weight_file, confide
             'confidences': confidences
         }
         output.append(result)
-    
+
     return output
 
 def yolo_video(name_path, cfg_path, weight_path):
