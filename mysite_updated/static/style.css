@@ -694,10 +694,12 @@ body {
     height: 50px;
 }
 
-.aicamp-link {
-    font-weight: bolder;
+div ul li .aicamp-link {
     background-color: #0ba764;
-    color: #ffffff;
+    color: #ffffff !important;
+    border-radius: 2px;
+    font-family: Futura Lt;
+    font-weight: 300;
 }
 
 .dropdown-item.active,
@@ -829,7 +831,7 @@ textarea.materialize-textarea {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: #dddddd !important;
+    color: #dddddd;
     font-family: Helevetica Neue;
     font-weight: 200;
 }
