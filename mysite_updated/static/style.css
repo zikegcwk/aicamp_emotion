@@ -502,6 +502,10 @@ body {
     .matrix-h {
         font-size: 32px;
     }
+    
+    .navbar-emotiontext {
+    font-size:21px;
+	}
 }
 
 @media (min-width: 700px) {
@@ -509,6 +513,10 @@ body {
         flex-basis: 50%;
         min-width: 50%;
     }
+    
+    .navbar-emotiontext {
+    font-size:30px;
+	}
 }
 
 html {
