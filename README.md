@@ -99,3 +99,11 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
 
 ### ***Deploy model***:
    - will add website stuff once they are done and i push them to github
+
+### ***Stucture and Technologies for Website***
+   - Bootstrap website with `sections` tags encapsulating each section
+   - jQuery
+   - font-awesome library
+   - sass
+   - `index-4.html` holds website
+   - css found in `css/style.css`
