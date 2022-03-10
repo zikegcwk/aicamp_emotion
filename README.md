@@ -94,8 +94,3 @@ Look under aicamp/scripts/etl, and you’ll find the following scripts that help
    ![alt text](https://raw.githubusercontent.com/zikegcwk/aicamp/master/yolo_training/clemv1/chartv2.png "Chart Part 2")
    ![alt text](https://raw.githubusercontent.com/zikegcwk/aicamp/master/yolo_training/clemv1/clem-5-emo_cm.jpg "Confusion Matrix")
    
-
-
-
-### ***Deploy model***:
-   - will add website stuff once they are done and i push them to github

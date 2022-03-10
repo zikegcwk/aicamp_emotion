@@ -34,8 +34,8 @@ def yolo_forward(net, LABELS, image, confidence_level, save_image=False):
 
     # determine only the *output* layer names that we need from YOLO
     ln = net.getLayerNames()
-    ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-
+    #ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    ln = [ln[i - 1] for i in net.getUnconnectedOutLayers()]
     # construct a blob from the input image and then perform a forward
     # pass of the YOLO object detector, giving us our bounding boxes and
     # associated probabilities
